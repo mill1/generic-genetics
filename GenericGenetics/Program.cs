@@ -2,12 +2,34 @@
 
 namespace GenericGenetics
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Generic Genetic algoritm!");
-            Console.Read();
+            Program p = new Program();
+
+            try
+            {
+                p.Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                Console.Read();
+            }
+        }
+
+        public void Run() { 
+
+            TestShakespeare myTest = new TestShakespeare();
+
+            myTest.Start();
+
+            while(true)
+                myTest.Update();
         }
     }
 }
