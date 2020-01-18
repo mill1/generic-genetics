@@ -1,0 +1,11 @@
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.exe
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.deps.json
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.runtimeconfig.json
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.runtimeconfig.dev.json
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.dll
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp3.0\GenericGenetics.pdb
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp3.0\GenericGenetics.csprojAssemblyReference.cache
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp3.0\GenericGenetics.AssemblyInfoInputs.cache
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp3.0\GenericGenetics.AssemblyInfo.cs
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp3.0\GenericGenetics.dll
+C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp3.0\GenericGenetics.pdb
