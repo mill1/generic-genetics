@@ -26,10 +26,7 @@ namespace GenericGenetics
 
             TestShakespeare myTest = new TestShakespeare();
 
-            myTest.Start();
-
-            while(true)
-                myTest.Update();
+            myTest.Run();
         }
     }
 }

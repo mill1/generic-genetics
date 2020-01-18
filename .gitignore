@@ -3,6 +3,9 @@
 ################################################################################
 
 *.ide-wal
+*.ide
+*.lock
 *.sqlite
 /.vs/ProjectSettings.json
 *.ide-shm
+/.vs/GenericGenetics/DesignTimeBuild/.dtbcache
