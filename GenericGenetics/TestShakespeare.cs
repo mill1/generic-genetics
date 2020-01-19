@@ -21,14 +21,14 @@ namespace GenericGenetics
         public void Run()
         {
             Console.WriteLine("Target string:");
-            targetText = Console.ReadLine();
+            targetText = Console.ReadLine(); //  "To be, or not be. That is the question.";
 
             if (string.IsNullOrEmpty(targetText))
                 throw new Exception("Target string is null or empty");
 
             random = new System.Random();
             ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, elitism, mutationRate);
-
+            
             while (ga.BestFitness < 1)
                 Update();
         }
@@ -36,9 +36,7 @@ namespace GenericGenetics
         private void Update()
         {
             ga.NewGeneration();
-
             UpdateText(ga.BestGenes, ga.BestFitness, ga.Generation);
-
         }
 
         private char GetRandomCharacter()

@@ -1,4 +1,3 @@
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.csprojAssemblyReference.cache
 C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.AssemblyInfoInputs.cache
 C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.AssemblyInfo.cs
 C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.deps.json

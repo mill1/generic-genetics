@@ -10,8 +10,8 @@ namespace GenericGenetics
         public float BestFitness { get; private set; }
         public T[] BestGenes { get; private set; }
 
-        public int Elitism;
-        public float MutationRate;
+        public int Elitism { get; private set; }
+        public float MutationRate { get; private set; }
 
         private List<DNA<T>> newPopulation;
         private Random random;
@@ -20,8 +20,8 @@ namespace GenericGenetics
         private Func<T> getRandomGene;
         private Func<int, float> fitnessFunction;
 
-        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene, Func<int, float> fitnessFunction,
-            int elitism, float mutationRate = 0.01f)
+        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene, 
+                                Func<int, float> fitnessFunction, int elitism, float mutationRate = 0.01f)
         {
             Generation = 1;
             Elitism = elitism;
@@ -36,9 +36,7 @@ namespace GenericGenetics
             BestGenes = new T[dnaSize];
 
             for (int i = 0; i < populationSize; i++)
-            {
-                Population.Add(new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, shouldInitGenes: true));
-            }
+                Population.Add(new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true));
         }
 
         public void NewGeneration(int numNewDNA = 0, bool crossoverNewDNA = false)
@@ -46,9 +44,7 @@ namespace GenericGenetics
             int finalCount = Population.Count + numNewDNA;
 
             if (finalCount <= 0)
-            {
                 return;
-            }
 
             if (Population.Count > 0)
             {
@@ -60,9 +56,7 @@ namespace GenericGenetics
             for (int i = 0; i < Population.Count; i++)
             {
                 if (i < Elitism && i < Population.Count)
-                {
                     newPopulation.Add(Population[i]);
-                }
                 else if (i < Population.Count || crossoverNewDNA)
                 {
                     DNA<T> parent1 = ChooseParent();
@@ -75,9 +69,7 @@ namespace GenericGenetics
                     newPopulation.Add(child);
                 }
                 else
-                {
-                    newPopulation.Add(new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, shouldInitGenes: true));
-                }
+                    newPopulation.Add(new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true));
             }
 
             List<DNA<T>> tmpList = Population;
@@ -90,17 +82,11 @@ namespace GenericGenetics
         private int CompareDNA(DNA<T> a, DNA<T> b)
         {
             if (a.Fitness > b.Fitness)
-            {
                 return -1;
-            }
             else if (a.Fitness < b.Fitness)
-            {
                 return 1;
-            }
             else
-            {
                 return 0;
-            }
         }
 
         private void CalculateFitness()
@@ -110,12 +96,12 @@ namespace GenericGenetics
 
             for (int i = 0; i < Population.Count; i++)
             {
-                fitnessSum += Population[i].CalculateFitness(i);
+                Population[i].CalculateFitness(i);
+
+                fitnessSum += Population[i].Fitness;
 
                 if (Population[i].Fitness > best.Fitness)
-                {
                     best = Population[i];
-                }
             }
 
             BestFitness = best.Fitness;
@@ -129,13 +115,10 @@ namespace GenericGenetics
             for (int i = 0; i < Population.Count; i++)
             {
                 if (randomNumber < Population[i].Fitness)
-                {
                     return Population[i];
-                }
 
                 randomNumber -= Population[i].Fitness;
             }
-
             return null;
         }
     }
