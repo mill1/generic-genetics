@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GenericGenetics
 {
@@ -35,8 +36,7 @@ namespace GenericGenetics
 
             BestGenes = new T[dnaSize];
 
-            for (int i = 0; i < populationSize; i++)
-                Population.Add(new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true));
+            Population = Enumerable.Range(0, populationSize).Select(x => new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true)).ToList();
         }
 
         public void NewGeneration(int numNewDNA = 0, bool crossoverNewDNA = false)

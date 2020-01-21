@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace GenericGenetics
 {
@@ -50,13 +50,20 @@ namespace GenericGenetics
             float score = 0;
             DNA<char> dna = ga.Population[index];
 
-            for (int i = 0; i < dna.Genes.Length; i++)
+            //for (int i = 0; i < dna.Genes.Length; i++)
+            //    if (dna.Genes[i] == targetText[i])
+            //        score += 1;
+
+            dna.Genes.Select((g, i) => {
+                Console.Write(i);
+                return i;
+            }); //.ToList() forces immediate query evaluation and returns a List<T> that contains the query results.
+
+            dna.Genes.Select((g, i) =>
             {
-                if (dna.Genes[i] == targetText[i])
-                {
-                    score += 1;
-                }
-            }
+                score += g == targetText[i] ? 1 : 0;
+                return i;
+            }).ToList();
 
             score /= targetText.Length;
 
@@ -64,7 +71,6 @@ namespace GenericGenetics
 
             return score;
         }
-
 
         private void UpdateText(char[] bestGenes, float bestFitness, int generation)
         {
