@@ -1,9 +1,0 @@
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.AssemblyInfoInputs.cache
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.AssemblyInfo.cs
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.deps.json
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.runtimeconfig.json
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.runtimeconfig.dev.json
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.dll
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\bin\Debug\netcoreapp2.1\GenericGenetics.pdb
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.dll
-C:\Users\enijh\source\repos\GenericGenetics\GenericGenetics\obj\Debug\netcoreapp2.1\GenericGenetics.pdb
