@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TextEvolution
+    public class TextEvolution : IEvolution<char>
     {
         string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-        int populationSize = 100; // 200;
-        float mutationRate = 0.01f; // 0.01f;
+        int populationSize = 150;
+        float mutationRate = 0.02f; 
 
         public string targetText;
         public string populationTextParent;
@@ -25,7 +25,7 @@ namespace GenericGenetics
             if (string.IsNullOrEmpty(targetText))
                 throw new Exception("Target string is null or empty");
 
-            random = new System.Random();
+            random = new Random();
             ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, mutationRate);
             
             while (ga.BestFitness < 1)
@@ -34,7 +34,7 @@ namespace GenericGenetics
 
         private void Update()
         {
-            ga.NewGeneration();
+            ga.SpawnNewGeneration();
             UpdateText(ga.BestGenes, ga.BestFitness, ga.Generation);
         }
 

@@ -7,6 +7,7 @@ namespace GenericGenetics
     {
         public T[] Genes { get;  set; }
         public float Fitness { get; private set; }
+        public bool IsMale { get; private set; }
 
         private Random random;
         private Func<T> getRandomGene;
@@ -15,6 +16,7 @@ namespace GenericGenetics
         public DNA(int size, Random random, Func<T> getRandomGene, Func<DNA<T>, float> fitnessFunction, bool InitializeGenes = true)
         {
             Genes = new T[size];
+            IsMale = random.NextDouble() < 0.5 ? true : false;
             this.random = random;
             this.getRandomGene = getRandomGene;
             this.fitnessFunction = fitnessFunction;
