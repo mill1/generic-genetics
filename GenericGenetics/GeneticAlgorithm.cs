@@ -40,13 +40,7 @@ namespace GenericGenetics
             fitnessSum = Population.Select(e => e.Fitness).Sum();
 
             DetermineBestGenes();
-            GetNewPopulation();
 
-            Generation++;
-        }
-
-        private void GetNewPopulation()
-        {
             newPopulation.Clear();
 
             Population.ForEach(e => newPopulation.Add(GetChild()));
@@ -55,6 +49,8 @@ namespace GenericGenetics
             List<DNA<T>> tmpList = Population;
             Population = newPopulation;
             newPopulation = tmpList;
+
+            Generation++;
         }
 
         private void DetermineBestGenes()

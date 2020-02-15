@@ -15,7 +15,7 @@ namespace GenericGenetics
         public string textPrefab;
 
         private GeneticAlgorithm<char> ga;
-        private System.Random random;
+        private Random random;
 
         public void Run()
         {
@@ -29,10 +29,10 @@ namespace GenericGenetics
             ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, mutationRate);
             
             while (ga.BestFitness < 1)
-                Update();
+                Evolve();
         }
 
-        private void Update()
+        private void Evolve()
         {
             ga.SpawnNewGeneration();
             UpdateText(ga.BestGenes, ga.BestFitness, ga.Generation);
