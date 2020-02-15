@@ -3,3 +3,5 @@
 ################################################################################
 
 /GenericGenetics/bin/Debug/netcoreapp3.0
+/GenericGenetics/obj
+/.vs/

@@ -4,12 +4,11 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TestShakespeare
+    public class TextEvolution
     {
         string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
         int populationSize = 100; // 200;
         float mutationRate = 0.01f; // 0.01f;
-        int elitism = 5;
 
         public string targetText;
         public string populationTextParent;
@@ -20,14 +19,14 @@ namespace GenericGenetics
 
         public void Run()
         {
-            Console.WriteLine("Target string:");
-            targetText = Console.ReadLine(); //  "To be, or not be. That is the question.";
+            Console.WriteLine("Target text:");
+            targetText = Console.ReadLine();;
 
             if (string.IsNullOrEmpty(targetText))
                 throw new Exception("Target string is null or empty");
 
             random = new System.Random();
-            ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, elitism, mutationRate);
+            ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, mutationRate);
             
             while (ga.BestFitness < 1)
                 Update();
@@ -50,10 +49,6 @@ namespace GenericGenetics
             float score = 0;
             DNA<char> dna = ga.Population[index];
 
-            //for (int i = 0; i < dna.Genes.Length; i++)
-            //    if (dna.Genes[i] == targetText[i])
-            //        score += 1;
-
             dna.Genes.Select((g, i) => {
                 Console.Write(i);
                 return i;
@@ -67,7 +62,9 @@ namespace GenericGenetics
 
             score /= targetText.Length;
 
-            score = (float)(Math.Pow(2, score) - 1) / (2 - 1);
+            // value proportional improvement by using exponent
+            int exp = 2;
+            score = (float)(Math.Pow(exp, score) - 1) / (exp - 1);
 
             return score;
         }

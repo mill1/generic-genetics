@@ -42,7 +42,6 @@ namespace GenericGenetics
             Genes = Genes.Select(g => {
                 return random.NextDouble() < mutationRate ? getRandomGene() : g;            
             }).ToArray();
-
         }
     }
 }

@@ -22,11 +22,12 @@ namespace GenericGenetics
             }
         }
 
-        public void Run() { 
+        public void Run()
+        {
 
-            TestShakespeare myTest = new TestShakespeare();
+            TextEvolution evolution = new TextEvolution();
 
-            myTest.Run();
+            evolution.Run();
         }
     }
 }
