@@ -85,26 +85,5 @@ namespace GenericGenetics
                         return Population[i];
             }
         }
-
-        private DNA<T> ChooseParentOrig()
-        {
-            Console.WriteLine("\r\nChoose parent");
-            double randomNumber = random.NextDouble() * fitnessSum;
-
-            for (int i = 0; i < Population.Count; i++)
-            {
-                Console.WriteLine($"i={i} randomNumber={randomNumber} e.Fitness={Population[i].Fitness}"); 
-
-                if (randomNumber < Population[i].Fitness)
-                {
-                    Console.WriteLine($"i={i} randomNumber={randomNumber} e.Fitness={Population[i].Fitness} parent={i}");
-                    Console.ReadLine();
-                    return Population[i];
-                }
-
-                randomNumber -= Population[i].Fitness;
-            }
-            return null; // never happens
-        }
     }
 }
