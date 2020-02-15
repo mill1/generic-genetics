@@ -44,15 +44,9 @@ namespace GenericGenetics
             return validCharacters[i];
         }
 
-        private float FitnessFunction(int index)
+        private float FitnessFunction(DNA<char> dna)
         {
             float score = 0;
-            DNA<char> dna = ga.Population[index];
-
-            dna.Genes.Select((g, i) => {
-                Console.Write(i);
-                return i;
-            }); //.ToList() forces immediate query evaluation and returns a List<T> that contains the query results.
 
             dna.Genes.Select((g, i) =>
             {

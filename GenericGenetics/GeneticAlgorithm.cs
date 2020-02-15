@@ -16,10 +16,10 @@ namespace GenericGenetics
         private Random random;
         private float fitnessSum;
         private Func<T> getRandomGene;
-        private Func<int, float> fitnessFunction;
+        private Func<DNA<T>, float> fitnessFunction;
 
         public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene,
-                                Func<int, float> fitnessFunction, float mutationRate = 0.01f)
+                                Func<DNA<T>, float> fitnessFunction, float mutationRate = 0.01f)
         {
             Generation = 1;
             MutationRate = mutationRate;
@@ -36,27 +36,13 @@ namespace GenericGenetics
 
         public void NewGeneration()
         {
-            if (Population.Count <= 0)
-                return;
+            CalculatePopulationFitness();
 
-            if (Population.Count > 0)
-            {
-                CalculateFitness();
-            }
             newPopulation.Clear();
 
-            for (int i = 0; i < Population.Count; i++)
-            {
-                DNA<T> parent1 = ChooseParent();
-                DNA<T> parent2 = ChooseParent();
+            Population.ForEach(e => newPopulation.Add(GetChild()));
 
-                DNA<T> child = parent1.Crossover(parent2);
-
-                child.Mutate(MutationRate);
-
-                newPopulation.Add(child);
-            }
-
+            // Save memory; switch between lists
             List<DNA<T>> tmpList = Population;
             Population = newPopulation;
             newPopulation = tmpList;
@@ -64,20 +50,29 @@ namespace GenericGenetics
             Generation++;
         }
 
-        private void CalculateFitness()
+        private DNA<T> GetChild()
+        {
+            DNA<T> parent1 = ChooseParent();
+            DNA<T> parent2 = ChooseParent();
+
+            DNA<T> child = parent1.Crossover(parent2);
+
+            child.Mutate(MutationRate);
+            return child;
+        }
+
+        private void CalculatePopulationFitness()
         {
             fitnessSum = 0;
             DNA<T> best = Population[0];
 
-            for (int i = 0; i < Population.Count; i++)
-            {
-                Population[i].CalculateFitness(i);
+            Population.ForEach(e => 
+                {
+                    e.CalculateFitness(e);
+                    fitnessSum += e.Fitness;
+                });
 
-                fitnessSum += Population[i].Fitness;
-
-                if (Population[i].Fitness > best.Fitness)
-                    best = Population[i];
-            }
+            best = Population.OrderByDescending(e => e.Fitness).FirstOrDefault();
 
             BestFitness = best.Fitness;
             best.Genes.CopyTo(BestGenes, 0);

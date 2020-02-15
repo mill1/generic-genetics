@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/GenericGenetics/v16/Server/sqlite3/storage.ide
 /GenericGenetics/bin/Debug/netcoreapp3.0
 /GenericGenetics/obj
 /.vs/

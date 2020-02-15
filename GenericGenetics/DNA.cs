@@ -10,9 +10,9 @@ namespace GenericGenetics
 
         private Random random;
         private Func<T> getRandomGene;
-        private Func<int, float> fitnessFunction;
+        private Func<DNA<T>, float> fitnessFunction;
 
-        public DNA(int size, Random random, Func<T> getRandomGene, Func<int, float> fitnessFunction, bool InitializeGenes = true)
+        public DNA(int size, Random random, Func<T> getRandomGene, Func<DNA<T>, float> fitnessFunction, bool InitializeGenes = true)
         {
             Genes = new T[size];
             this.random = random;
@@ -23,9 +23,9 @@ namespace GenericGenetics
                 Genes = Genes.Select(g => getRandomGene()).ToArray();
         }
 
-        public void CalculateFitness(int index)
+        public void CalculateFitness(DNA<T> dna)
         {
-            Fitness = fitnessFunction(index);
+            Fitness = fitnessFunction(dna);
         }
 
         public DNA<T> Crossover(DNA<T> otherParent)
