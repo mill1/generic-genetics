@@ -20,8 +20,7 @@ namespace GenericGenetics
             this.fitnessFunction = fitnessFunction;
 
             if (InitializeGenes)
-                for (int i = 0; i < Genes.Length; i++)
-                    Genes[i] = getRandomGene();
+                Genes = Genes.Select(g => getRandomGene()).ToArray();
         }
 
         public void CalculateFitness(int index)
@@ -33,17 +32,17 @@ namespace GenericGenetics
         {
             DNA<T> child = new DNA<T>(Genes.Length, random, getRandomGene, fitnessFunction, InitializeGenes: false);
 
-            for (int i = 0; i < Genes.Length; i++)
-                child.Genes[i] = random.NextDouble() < 0.5 ? Genes[i] : otherParent.Genes[i];
+            child.Genes = Genes.Select((g, i) => random.NextDouble() < 0.5 ? g : otherParent.Genes[i]).ToArray();
 
             return child;
         }
 
         public void Mutate(float mutationRate)
         {
-            for (int i = 0; i < Genes.Length; i++)
-                if (random.NextDouble() < mutationRate)
-                    Genes[i] = getRandomGene();
+            Genes = Genes.Select(g => {
+                return random.NextDouble() < mutationRate ? getRandomGene() : g;            
+            }).ToArray();
+
         }
     }
 }
