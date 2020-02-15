@@ -4,38 +4,37 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TestShakespeare
+    public class TextEvolution : IEvolution<char>
     {
         string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-        int populationSize = 100; // 200;
-        float mutationRate = 0.01f; // 0.01f;
-        int elitism = 5;
+        int populationSize = 150;
+        float mutationRate = 0.02f; 
 
         public string targetText;
         public string populationTextParent;
         public string textPrefab;
 
         private GeneticAlgorithm<char> ga;
-        private System.Random random;
+        private Random random;
 
         public void Run()
         {
-            Console.WriteLine("Target string:");
-            targetText = Console.ReadLine(); //  "To be, or not be. That is the question.";
+            Console.WriteLine("Target text:");
+            targetText = Console.ReadLine();;
 
             if (string.IsNullOrEmpty(targetText))
                 throw new Exception("Target string is null or empty");
 
-            random = new System.Random();
-            ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, elitism, mutationRate);
+            random = new Random();
+            ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, mutationRate);
             
             while (ga.BestFitness < 1)
-                Update();
+                Evolve();
         }
 
-        private void Update()
+        private void Evolve()
         {
-            ga.NewGeneration();
+            ga.SpawnNewGeneration();
             UpdateText(ga.BestGenes, ga.BestFitness, ga.Generation);
         }
 
@@ -45,19 +44,9 @@ namespace GenericGenetics
             return validCharacters[i];
         }
 
-        private float FitnessFunction(int index)
+        private float FitnessFunction(DNA<char> dna)
         {
             float score = 0;
-            DNA<char> dna = ga.Population[index];
-
-            //for (int i = 0; i < dna.Genes.Length; i++)
-            //    if (dna.Genes[i] == targetText[i])
-            //        score += 1;
-
-            dna.Genes.Select((g, i) => {
-                Console.Write(i);
-                return i;
-            }); //.ToList() forces immediate query evaluation and returns a List<T> that contains the query results.
 
             dna.Genes.Select((g, i) =>
             {
@@ -67,7 +56,9 @@ namespace GenericGenetics
 
             score /= targetText.Length;
 
-            score = (float)(Math.Pow(2, score) - 1) / (2 - 1);
+            // value proportional improvement by using exponent
+            int exp = 2;
+            score = (float)(Math.Pow(exp, score) - 1) / (exp - 1);
 
             return score;
         }

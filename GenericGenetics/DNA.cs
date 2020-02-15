@@ -7,14 +7,16 @@ namespace GenericGenetics
     {
         public T[] Genes { get;  set; }
         public float Fitness { get; private set; }
+        public bool IsMale { get; private set; }
 
         private Random random;
         private Func<T> getRandomGene;
-        private Func<int, float> fitnessFunction;
+        private Func<DNA<T>, float> fitnessFunction;
 
-        public DNA(int size, Random random, Func<T> getRandomGene, Func<int, float> fitnessFunction, bool InitializeGenes = true)
+        public DNA(int size, Random random, Func<T> getRandomGene, Func<DNA<T>, float> fitnessFunction, bool InitializeGenes = true)
         {
             Genes = new T[size];
+            IsMale = random.NextDouble() < 0.5 ? true : false;
             this.random = random;
             this.getRandomGene = getRandomGene;
             this.fitnessFunction = fitnessFunction;
@@ -23,9 +25,9 @@ namespace GenericGenetics
                 Genes = Genes.Select(g => getRandomGene()).ToArray();
         }
 
-        public void CalculateFitness(int index)
+        public void CalculateFitness(DNA<T> dna)
         {
-            Fitness = fitnessFunction(index);
+            Fitness = fitnessFunction(dna);
         }
 
         public DNA<T> Crossover(DNA<T> otherParent)
@@ -42,7 +44,6 @@ namespace GenericGenetics
             Genes = Genes.Select(g => {
                 return random.NextDouble() < mutationRate ? getRandomGene() : g;            
             }).ToArray();
-
         }
     }
 }
