@@ -16,22 +16,22 @@ namespace GenericGenetics
         private Random random;
         private float fitnessSum;
         private Func<T> getRandomGene;
-        private Func<DNA<T>, float> fitnessFunction;
+        private Func<DNA<T>, float> determineFitness;
 
-        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene,
-                                Func<DNA<T>, float> fitnessFunction, float mutationRate = 0.01f)
+        public GeneticAlgorithm(int PopulationSize, int dnaSize, Random random, Func<T> getRandomGene,
+                                Func<DNA<T>, float> determineFitness, float MutationRate)
         {
             Generation = 1;
-            MutationRate = mutationRate;
-            Population = new List<DNA<T>>(populationSize);
-            newPopulation = new List<DNA<T>>(populationSize);
+            MutationRate = MutationRate;
+            Population = new List<DNA<T>>(PopulationSize);
+            newPopulation = new List<DNA<T>>(PopulationSize);
             this.random = random;
             this.getRandomGene = getRandomGene;
-            this.fitnessFunction = fitnessFunction;
+            this.determineFitness = determineFitness;
 
             BestGenes = new T[dnaSize];
 
-            Population = Enumerable.Range(0, populationSize).Select(x => new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true)).ToList();
+            Population = Enumerable.Range(0, PopulationSize).Select(x => new DNA<T>(dnaSize, random, getRandomGene, determineFitness, InitializeGenes: true)).ToList();
         }
 
         public void SpawnNewGeneration()
