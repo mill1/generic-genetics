@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GenericGenetics
 {
-    public abstract class Evolution
+    public abstract class Evolution<T>
     {
-        private Random random;
         public abstract void GetInput();
 
-        public abstract void DisplayResult(char[] bestGenes, float bestFitness, int generation);
+        public abstract void DisplayResult(T[] bestGenes, float bestFitness, int generation);
 
         public abstract double TargetFitness { get; }
         public abstract int PopulationSize { get; }
@@ -17,14 +14,16 @@ namespace GenericGenetics
         public abstract float MutationRate { get; }
 
         // Delegates
-        public abstract char GetRandomGene();
-        public abstract float DetermineFitness(DNA<char> dna);
+        public abstract T GetRandomGene();
+        public abstract float DetermineFitness(DNA<T> dna);
 
-        public void Run() 
+        public void Run()
         {
+            Random random = new Random();
+
             GetInput();
 
-            GeneticAlgorithm<char> ga = new GeneticAlgorithm<char>(PopulationSize, DnaSize, new Random(), GetRandomGene, DetermineFitness, MutationRate);
+            GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
 
             while (ga.BestFitness < TargetFitness)
             {

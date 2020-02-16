@@ -13,7 +13,7 @@ namespace GenericGenetics
 
         public void Run(string[] args)
         {
-            Evolution evolution = new TextEvolution();
+            Evolution<char> evolution = new TextEvolution();
 
             try
             {

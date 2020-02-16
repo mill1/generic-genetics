@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TextEvolution : Evolution
+    public class TextEvolution : Evolution<char>
     {
         string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
 
@@ -14,7 +13,7 @@ namespace GenericGenetics
 
         public override double TargetFitness { get; } = 1;
         public override int PopulationSize { get; } = 150;
-        public override int DnaSize { get; set;  } = 150;
+        public override int DnaSize { get; set; }
         public override float MutationRate { get; } = 0.01f;
 
         public override void GetInput()

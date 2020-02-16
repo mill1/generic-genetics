@@ -5,7 +5,7 @@ namespace GenericGenetics
 {
     public class DNA<T>
     {
-        public T[] Genes { get;  set; }
+        public T[] Genes { get; set; }
         public float Fitness { get; private set; }
         public bool IsMale { get; private set; }
 
@@ -41,8 +41,9 @@ namespace GenericGenetics
 
         public void Mutate(float MutationRate)
         {
-            Genes = Genes.Select(g => {
-                return random.NextDouble() < MutationRate ? getRandomGene() : g;            
+            Genes = Genes.Select(g =>
+            {
+                return random.NextDouble() < MutationRate ? getRandomGene() : g;
             }).ToArray();
         }
     }
