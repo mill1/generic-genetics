@@ -30,7 +30,7 @@ namespace GenericGenetics
 
         public override char GetRandomGene()
         {
-            int i = random.Next(validCharacters.Length);
+            int i = new Random().Next(validCharacters.Length);
             return validCharacters[i];
         }
 

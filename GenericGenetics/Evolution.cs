@@ -6,7 +6,7 @@ namespace GenericGenetics
 {
     public abstract class Evolution
     {
-        public Random random;
+        private Random random;
         public abstract void GetInput();
 
         public abstract void DisplayResult(char[] bestGenes, float bestFitness, int generation);
@@ -24,8 +24,7 @@ namespace GenericGenetics
         {
             GetInput();
 
-            random = new Random();
-            GeneticAlgorithm<char> ga = new GeneticAlgorithm<char>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
+            GeneticAlgorithm<char> ga = new GeneticAlgorithm<char>(PopulationSize, DnaSize, new Random(), GetRandomGene, DetermineFitness, MutationRate);
 
             while (ga.BestFitness < TargetFitness)
             {
