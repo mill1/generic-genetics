@@ -13,31 +13,26 @@ namespace GenericGenetics
         public float MutationRate { get; private set; }
 
         private List<DNA<T>> newPopulation;
-        private Random random;
-        private float fitnessSum;
-        private Func<T> getRandomGene;
-        private Func<DNA<T>, float> fitnessFunction;
+        private readonly Random random;
 
         public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene,
-                                Func<DNA<T>, float> fitnessFunction, float mutationRate = 0.01f)
+                                Func<DNA<T>, float> determineFitness, float mutationRate)
         {
             Generation = 1;
             MutationRate = mutationRate;
             Population = new List<DNA<T>>(populationSize);
             newPopulation = new List<DNA<T>>(populationSize);
             this.random = random;
-            this.getRandomGene = getRandomGene;
-            this.fitnessFunction = fitnessFunction;
 
             BestGenes = new T[dnaSize];
 
-            Population = Enumerable.Range(0, populationSize).Select(x => new DNA<T>(dnaSize, random, getRandomGene, fitnessFunction, InitializeGenes: true)).ToList();
+            Population = Enumerable.Range(0, populationSize).Select(
+                e => new DNA<T>(dnaSize, random, getRandomGene, determineFitness, InitializeGenes: true)).ToList();
         }
 
         public void SpawnNewGeneration()
         {
             Population.ForEach(e => e.CalculateFitness(e));
-            fitnessSum = Population.Select(e => e.Fitness).Sum();
 
             DetermineBestGenes();
 
@@ -63,8 +58,8 @@ namespace GenericGenetics
 
         private DNA<T> GetChild()
         {
-            DNA<T> parent1 = ChooseParent(isMale:true);
-            DNA<T> parent2 = ChooseParent(isMale:false);
+            DNA<T> parent1 = ChooseParent(isMale: true);
+            DNA<T> parent2 = ChooseParent(isMale: false);
 
             DNA<T> child = parent1.Crossover(parent2);
 

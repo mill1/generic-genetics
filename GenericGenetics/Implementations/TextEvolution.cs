@@ -1,50 +1,39 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TextEvolution : IEvolution<char>
+    public class TextEvolution : Evolution<char>
     {
         string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-        int populationSize = 150;
-        float mutationRate = 0.02f; 
 
         public string targetText;
         public string populationTextParent;
         public string textPrefab;
 
-        private GeneticAlgorithm<char> ga;
-        private Random random;
+        public override double TargetFitness { get; } = 1;
+        public override int PopulationSize { get; } = 150;
+        public override int DnaSize { get; set; }
+        public override float MutationRate { get; } = 0.01f;
 
-        public void Run()
+        public override void GetInput()
         {
             Console.WriteLine("Target text:");
-            targetText = Console.ReadLine();;
+            targetText = Console.ReadLine(); ;
 
             if (string.IsNullOrEmpty(targetText))
                 throw new Exception("Target string is null or empty");
 
-            random = new Random();
-            ga = new GeneticAlgorithm<char>(populationSize, targetText.Length, random, GetRandomCharacter, FitnessFunction, mutationRate);
-            
-            while (ga.BestFitness < 1)
-                Evolve();
+            DnaSize = targetText.Length;
         }
 
-        private void Evolve()
+        public override char GetRandomGene()
         {
-            ga.SpawnNewGeneration();
-            UpdateText(ga.BestGenes, ga.BestFitness, ga.Generation);
-        }
-
-        private char GetRandomCharacter()
-        {
-            int i = random.Next(validCharacters.Length);
+            int i = new Random().Next(validCharacters.Length);
             return validCharacters[i];
         }
 
-        private float FitnessFunction(DNA<char> dna)
+        public override float DetermineFitness(DNA<char> dna)
         {
             float score = 0;
 
@@ -63,7 +52,7 @@ namespace GenericGenetics
             return score;
         }
 
-        private void UpdateText(char[] bestGenes, float bestFitness, int generation)
+        public override void DisplayResult(char[] bestGenes, float bestFitness, int generation)
         {
             Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, bestFitness, new string(bestGenes));
         }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GenericGenetics
+namespace GenericGenetics.Implementations
 {
-    internal interface IEvolution<T>
+    public class Shape
     {
-        void Run();
     }
 }
