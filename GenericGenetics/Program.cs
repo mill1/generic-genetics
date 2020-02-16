@@ -8,9 +8,16 @@ namespace GenericGenetics
         {
             Program p = new Program();
 
+            p.Run(args);
+        }
+
+        public void Run(string[] args)
+        {
+            Evolution<char> evolution = new TextEvolution();
+
             try
             {
-                p.Run();
+                evolution.Run();
             }
             catch (Exception e)
             {
@@ -20,13 +27,6 @@ namespace GenericGenetics
             {
                 Console.Read();
             }
-        }
-
-        public void Run() { 
-
-            TestShakespeare myTest = new TestShakespeare();
-
-            myTest.Run();
         }
     }
 }
