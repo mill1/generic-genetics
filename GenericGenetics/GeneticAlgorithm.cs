@@ -76,7 +76,7 @@ namespace GenericGenetics
                 int i = (int)(Population.Count * random.NextDouble());
 
                 if (Population[i].IsMale != isMale)
-                    if (Population[i].Fitness > average)
+                    if (Population[i].Fitness >= average)
                         return Population[i];
             }
         }

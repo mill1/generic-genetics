@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericGenetics.Implementations;
+using System;
 
 namespace GenericGenetics
 {
@@ -13,7 +14,9 @@ namespace GenericGenetics
 
         public void Run(string[] args)
         {
-            Evolution<char> evolution = new TextEvolution();
+            // Evolution<char> evolution = new TextEvolution();
+
+            Evolution<Shape> evolution = new ShapeEvolution();
 
             try
             {

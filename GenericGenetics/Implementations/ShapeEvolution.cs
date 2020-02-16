@@ -6,32 +6,31 @@ namespace GenericGenetics.Implementations
 {
     public class ShapeEvolution : Evolution<Shape>
     {
-        public override double TargetFitness => throw new NotImplementedException();
-
-        public override int PopulationSize => throw new NotImplementedException();
-
-        public override int DnaSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override float MutationRate => throw new NotImplementedException();
+        public override double TargetFitness { get; } = 1;
+        public override int PopulationSize { get; } = 100;
+        public override int DnaSize { get; set; }
+        public override float MutationRate { get; } = 0.01f;
 
         public override float DetermineFitness(DNA<Shape> dna)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public override void DisplayResult(Shape[] bestGenes, float bestFitness, int generation)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("TODO: DisplayResult");
         }
 
         public override void GetInput()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("TODO: GetInput");
+
+            DnaSize = 100;
         }
 
         public override Shape GetRandomGene()
         {
-            throw new NotImplementedException();
+            return new Shape();
         }
     }
 }
