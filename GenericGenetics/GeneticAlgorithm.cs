@@ -15,7 +15,7 @@ namespace GenericGenetics
         private List<DNA<T>> newPopulation;
         private readonly Random random;
 
-        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene,
+        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<Random, T> getRandomGene,
                                 Func<DNA<T>, float> determineFitness, float mutationRate)
         {
             Generation = 1;

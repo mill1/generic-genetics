@@ -16,7 +16,7 @@ namespace GenericGenetics
         {
             // Evolution<char> evolution = new TextEvolution();
 
-            Evolution<Shape> evolution = new ShapeEvolution();
+            Evolution<Point> evolution = new CircleEvolution();
 
             try
             {

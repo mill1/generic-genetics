@@ -4,6 +4,7 @@ namespace GenericGenetics
 {
     public abstract class Evolution<T>
     {
+        Random random;
         public abstract void GetInput();
 
         public abstract void DisplayResult(T[] bestGenes, float bestFitness, int generation);
@@ -14,12 +15,12 @@ namespace GenericGenetics
         public abstract float MutationRate { get; }
 
         // Delegates
-        public abstract T GetRandomGene();
+        public abstract T GetRandomGene(Random random);
         public abstract float DetermineFitness(DNA<T> dna);
 
         public void Run()
         {
-            Random random = new Random();
+            random = new Random();
 
             GetInput();
 

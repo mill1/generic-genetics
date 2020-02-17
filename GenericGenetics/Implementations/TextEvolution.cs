@@ -5,16 +5,13 @@ namespace GenericGenetics
 {
     public class TextEvolution : Evolution<char>
     {
-        string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-
-        public string targetText;
-        public string populationTextParent;
-        public string textPrefab;
-
         public override double TargetFitness { get; } = 1;
         public override int PopulationSize { get; } = 150;
         public override int DnaSize { get; set; }
         public override float MutationRate { get; } = 0.01f;
+
+        private string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
+        private string targetText;
 
         public override void GetInput()
         {
@@ -22,14 +19,14 @@ namespace GenericGenetics
             targetText = Console.ReadLine(); ;
 
             if (string.IsNullOrEmpty(targetText))
-                throw new Exception("Target string is null or empty");
+                throw new Exception("Input is null or empty");
 
             DnaSize = targetText.Length;
         }
 
-        public override char GetRandomGene()
+        public override char GetRandomGene(Random random)
         {
-            int i = new Random().Next(validCharacters.Length);
+            int i = random.Next(validCharacters.Length);
             return validCharacters[i];
         }
 
@@ -39,7 +36,7 @@ namespace GenericGenetics
 
             dna.Genes.Select((g, i) =>
             {
-                score += g == targetText[i] ? 1 : 0;
+                score += (g == targetText[i] ? 1 : 0);
                 return i;
             }).ToList();
 

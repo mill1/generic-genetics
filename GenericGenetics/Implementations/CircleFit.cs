@@ -1,86 +1,53 @@
-﻿using Jint;
+﻿/*
+ *    Wrapper for circle-fit; a JavaScript library for fast circle fitting of a set of 2D points.
+ * 
+ *       Return-object
+ *       success(Boolean) : status of the computation
+ *       points(Array) : all points given by the user
+ *       projections(Array) : projections of each points onto the circle
+ *       distances(Array) : distance of each points to the circle
+ *       center(Object) : center of the circle
+ *       radius(Number) : radius of the circle
+ *       residue(Number) : residue of the least squares method, can be use to define the quality of the circle
+ *       computationTime(Number) : time spent in computation(in milliseconds)
+ */
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 namespace GenericGenetics.Implementations
 {
-    public class ShapeEvolution : Evolution<Shape>
+    public class CircleFit
     {
-        public override double TargetFitness { get; } = 1;
-        public override int PopulationSize { get; } = 100;
-        public override int DnaSize { get; set; }
-        public override float MutationRate { get; } = 0.01f;
+        private readonly string circleFitJS;
 
-        public string circleFitJS { get; private set; }
-
-        public ShapeEvolution()
+        public CircleFit()
         {
             circleFitJS = GetCircleFitJavaScript();
         }
 
-        public override float DetermineFitness(DNA<Shape> dna)
-        {
-            return 1;
-        }
-
-        public void TestRunJavaScript()
+        public float CalculateFitness(Point[] points)
         {
             var engine = new Jint.Engine();
-
-            // engine.Execute(File.ReadAllText("circlefit.js"));
-
             engine.Execute(circleFitJS);
 
-            engine.Execute("CIRCLEFIT.resetPoints()");
+            //  engine.Execute("CIRCLEFIT.resetPoints()");
 
-            engine.Execute("CIRCLEFIT.addPoint(11, 24)");
-            engine.Execute("CIRCLEFIT.addPoint(28, 32)");
-            engine.Execute("CIRCLEFIT.addPoint(62, 1)");
-            engine.Execute("CIRCLEFIT.addPoint(41, 15)");
-
-            // success(Boolean) : status of the computation
-            // points(Array) : all points given by the user
-            // projections(Array) : projections of each points onto the circle
-            // distances(Array) : distance of each points to the circle
-            // center(Object) : center of the circle
-            // radius(Number) : radius of the circle
-            // residue(Number) : residue of the least squares method, can be use to define the quality of the circle
-            // computationTime(Number) : time spent in computation(in milliseconds)
+            foreach (Point point in points)
+                engine.Execute($"CIRCLEFIT.addPoint({point.X}, {point.Y})");
 
             dynamic result = engine.Execute("CIRCLEFIT.compute()").GetCompletionValue().ToObject();
 
             if (result.success)
-                Console.WriteLine($"Quality of circle: {result.residue}");
+                return (float) result.residue;
             else
-                throw new Exception("Could not compute");
-        }
-
-
-        public override void GetInput()
-        {
-            TestRunJavaScript();
-
-            Console.WriteLine("TODO: GetInput");
-
-            DnaSize = 100;
-        }
-
-        public override void DisplayResult(Shape[] bestGenes, float bestFitness, int generation)
-        {
-            Console.WriteLine("TODO: DisplayResult");
-        }
-
-        public override Shape GetRandomGene()
-        {
-            return new Shape();
+                throw new Exception("Could not compute.");
         }
 
         private string GetCircleFitJavaScript()
         {
             /*  
              *  https://github.com/Meakk/circle-fit
-             *  http://csharphelper.com/blog/2014/08/find-a-minimal-bounding-circle-of-a-set-of-points-in-c/
              *  http://csharphelper.com/blog/2014/08/find-a-minimal-bounding-circle-of-a-set-of-points-in-c/
              *  https://blog.codeinside.eu/2019/06/30/jint-invoke-javascript-from-dotnet/
              */
