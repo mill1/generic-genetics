@@ -7,10 +7,10 @@ namespace GenericGenetics.Implementations
 {
     public class CircleEvolution : Evolution<Point>
     {
-        public override double TargetFitness { get; } = 0.001;
-        public override int PopulationSize { get; } = 10;
+        public override double TargetFitness { get; } = 0.9999999f;
+        public override int PopulationSize { get; } = 40;
         public override int DnaSize { get; set; }
-        public override float MutationRate { get; } = 0.01f;
+        public override double MutationRate { get; } = 0.01f;
 
         private CircleFit circleFit;
         private Matrix matrix;
@@ -32,8 +32,9 @@ namespace GenericGenetics.Implementations
 
             matrix = new Matrix(width, height);
 
-            Console.WriteLine("Nr of points:");
+            Console.WriteLine($"Nr of points (< {width * height}):");
             DnaSize = int.Parse(Console.ReadLine());
+
         }
 
         public override Point GetRandomGene(Random random)
@@ -41,12 +42,12 @@ namespace GenericGenetics.Implementations
             return new Point(random.Next(matrix.Width), random.Next(matrix.Heigth));
         }
 
-        public override float DetermineFitness(DNA<Point> dna)
+        public override double DetermineFitness(DNA<Point> dna)
         {
             return circleFit.CalculateFitness(dna.Genes);
         }
 
-        public override void DisplayResult(Point[] bestGenes, float bestFitness, int generation)
+        public override void DisplayResult(Point[] bestGenes, double bestFitness, int generation)
         {
             matrix.Print(bestGenes, bestFitness, generation);
         }
@@ -62,9 +63,15 @@ namespace GenericGenetics.Implementations
             Heigth = heigth;
         }
 
-        public void Print(Point[] bestGenes, float bestFitness, int generation)
+        public void Print(Point[] bestGenes, double bestFitness, int generation)
         {
-            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, bestFitness, bestGenes.Length);
+            Console.WriteLine("{0,5:#####} {1} {2}", generation, bestFitness, bestGenes.Length);
+
+            foreach (Point point in bestGenes)
+            {
+                Console.WriteLine($"{point.X} {point.Y}");
+            }
+
         }
     }
 

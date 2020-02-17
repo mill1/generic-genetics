@@ -7,16 +7,16 @@ namespace GenericGenetics
         Random random;
         public abstract void GetInput();
 
-        public abstract void DisplayResult(T[] bestGenes, float bestFitness, int generation);
+        public abstract void DisplayResult(T[] bestGenes, double bestFitness, int generation);
 
         public abstract double TargetFitness { get; }
         public abstract int PopulationSize { get; }
         public abstract int DnaSize { get; set; }
-        public abstract float MutationRate { get; }
+        public abstract double MutationRate { get; }
 
         // Delegates
         public abstract T GetRandomGene(Random random);
-        public abstract float DetermineFitness(DNA<T> dna);
+        public abstract double DetermineFitness(DNA<T> dna);
 
         public void Run()
         {

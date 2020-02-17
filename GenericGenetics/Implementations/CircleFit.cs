@@ -26,7 +26,7 @@ namespace GenericGenetics.Implementations
             circleFitJS = GetCircleFitJavaScript();
         }
 
-        public float CalculateFitness(Point[] points)
+        public double CalculateFitness(Point[] points)
         {
             var engine = new Jint.Engine();
             engine.Execute(circleFitJS);
@@ -39,7 +39,13 @@ namespace GenericGenetics.Implementations
             dynamic result = engine.Execute("CIRCLEFIT.compute()").GetCompletionValue().ToObject();
 
             if (result.success)
-                return (float) result.residue;
+            {
+                // The residual for an observation is the difference between the observation and the fitted point.
+                // Some residuals are positive and some are negative.
+                double res = 1 - Math.Abs((double)result.residue * 10000000000000);
+                Console.WriteLine($"{res}");
+                return res;
+            }
             else
                 throw new Exception("Could not compute.");
         }

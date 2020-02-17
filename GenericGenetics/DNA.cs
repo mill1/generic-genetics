@@ -6,14 +6,14 @@ namespace GenericGenetics
     public class DNA<T>
     {
         public T[] Genes { get; set; }
-        public float Fitness { get; private set; }
+        public double Fitness { get; private set; }
         public bool IsMale { get; private set; }
 
         private Random random;
         private Func<Random, T> getRandomGene;
-        private Func<DNA<T>, float> determineFitness;
+        private Func<DNA<T>, double> determineFitness;
 
-        public DNA(int size, Random random, Func<Random, T> getRandomGene, Func<DNA<T>, float> determineFitness, bool InitializeGenes = true)
+        public DNA(int size, Random random, Func<Random, T> getRandomGene, Func<DNA<T>, double> determineFitness, bool InitializeGenes = true)
         {
             Genes = new T[size];
             IsMale = random.NextDouble() < 0.5 ? true : false;
@@ -39,7 +39,7 @@ namespace GenericGenetics
             return child;
         }
 
-        public void Mutate(float MutationRate)
+        public void Mutate(double MutationRate)
         {
             Genes = Genes.Select(g =>
             {
