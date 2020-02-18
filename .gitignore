@@ -2,7 +2,19 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/GenericGenetics/v16/Server/sqlite3/storage.ide
+
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
 /GenericGenetics/bin/Debug/netcoreapp3.0
+*.dtbcache
+/.vs/GenericGenetics/v15/Server/sqlite3
+/.vs/GenericGenetics/v15/Server/sqlite3/storage.ide
 /GenericGenetics/obj
-/.vs/
+/.vs/GenericGenetics/v16/Server/sqlite3/db.lock
+/.vs/GenericGenetics/v16/Server/sqlite3/storage.ide-shm
+*.sqlite
+/.vs/ProjectSettings.json
+/.vs/GenericGenetics/v16/Server/sqlite3/storage.ide-wal
+

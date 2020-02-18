@@ -5,16 +5,13 @@ namespace GenericGenetics
 {
     public class TextEvolution : Evolution<char>
     {
-        string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-
-        public string targetText;
-        public string populationTextParent;
-        public string textPrefab;
-
         public override double TargetFitness { get; } = 1;
         public override int PopulationSize { get; } = 150;
         public override int DnaSize { get; set; }
-        public override float MutationRate { get; } = 0.01f;
+        public override double MutationRate { get; } = 0.01f;
+
+        private string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
+        private string targetText;
 
         public override void GetInput()
         {
@@ -22,24 +19,24 @@ namespace GenericGenetics
             targetText = Console.ReadLine(); ;
 
             if (string.IsNullOrEmpty(targetText))
-                throw new Exception("Target string is null or empty");
+                throw new Exception("Input is null or empty");
 
             DnaSize = targetText.Length;
         }
 
-        public override char GetRandomGene()
+        public override char GetRandomGene(Random random)
         {
-            int i = new Random().Next(validCharacters.Length);
+            int i = random.Next(validCharacters.Length);
             return validCharacters[i];
         }
 
-        public override float DetermineFitness(DNA<char> dna)
+        public override double DetermineFitness(DNA<char> dna)
         {
-            float score = 0;
+            double score = 0;
 
             dna.Genes.Select((g, i) =>
             {
-                score += g == targetText[i] ? 1 : 0;
+                score += (g == targetText[i] ? 1 : 0);
                 return i;
             }).ToList();
 
@@ -47,12 +44,12 @@ namespace GenericGenetics
 
             // value proportional improvement by using exponent
             int exp = 2;
-            score = (float)(Math.Pow(exp, score) - 1) / (exp - 1);
+            score = (double)(Math.Pow(exp, score) - 1) / (exp - 1);
 
             return score;
         }
 
-        public override void DisplayResult(char[] bestGenes, float bestFitness, int generation)
+        public override void DisplayResult(char[] bestGenes, double bestFitness, int generation)
         {
             Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, bestFitness, new string(bestGenes));
         }
