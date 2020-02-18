@@ -8,15 +8,15 @@ namespace GenericGenetics
     {
         public List<DNA<T>> Population { get; private set; }
         public int Generation { get; private set; }
-        public float BestFitness { get; private set; }
+        public double BestFitness { get; private set; }
         public T[] BestGenes { get; private set; }
-        public float MutationRate { get; private set; }
+        public double MutationRate { get; private set; }
 
         private List<DNA<T>> newPopulation;
         private readonly Random random;
 
-        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<T> getRandomGene,
-                                Func<DNA<T>, float> determineFitness, float mutationRate)
+        public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<Random, T> getRandomGene,
+                                Func<DNA<T>, double> determineFitness, double mutationRate)
         {
             Generation = 1;
             MutationRate = mutationRate;
@@ -69,14 +69,14 @@ namespace GenericGenetics
 
         private DNA<T> ChooseParent(bool isMale)
         {
-            float average = Population.Select(e => e.Fitness).Average();
+            double average = Population.Select(e => e.Fitness).Average();
 
             while (true)
             {
                 int i = (int)(Population.Count * random.NextDouble());
 
                 if (Population[i].IsMale != isMale)
-                    if (Population[i].Fitness > average)
+                    if (Population[i].Fitness >= average)
                         return Population[i];
             }
         }
