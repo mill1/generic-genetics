@@ -7,10 +7,10 @@ namespace GenericGenetics.Implementations
 {
     public class CircleEvolution : Evolution<Point>
     {
-        public override double TargetFitness { get; } = 0.9999999f;
-        public override int PopulationSize { get; } = 40;
+        public override double TargetFitness { get; } = 0.92f;
+        public override int PopulationSize { get; } = 200;
         public override int DnaSize { get; set; }
-        public override double MutationRate { get; } = 0.01f;
+        public override double MutationRate { get; } = 0.02f;
 
         private CircleFit circleFit;
         private Matrix matrix;
@@ -22,6 +22,8 @@ namespace GenericGenetics.Implementations
 
         public override void GetInput()
         {
+            // Matrix: nr of columns: 8
+            // Nr of points(< 64): 22
 
             Console.WriteLine("Matrix: nr of columns:");
             int width = int.Parse(Console.ReadLine());
@@ -65,13 +67,28 @@ namespace GenericGenetics.Implementations
 
         public void Print(Point[] bestGenes, double bestFitness, int generation)
         {
-            Console.WriteLine("{0,5:#####} {1} {2}", generation, bestFitness, bestGenes.Length);
+            Console.WriteLine("\r\nGeneration: {0,4:####} Gene count: {1} score: {2}\r\n", generation, bestGenes.Length, bestFitness);
+
+            char[,] chars = new char[bestGenes.Length, bestGenes.Length];
 
             foreach (Point point in bestGenes)
-            {
-                Console.WriteLine($"{point.X} {point.Y}");
-            }
+                chars[point.X, point.Y] = '\u25A0';
 
+            for (int i = 0; i < Width; i++)
+            {
+                Console.Write($"{i}\t");
+                Console.WriteLine(GetRow(chars, i)); 
+            }
+        }
+
+        private T[] GetRow<T>(T[,] matrix, int row)
+        {
+            var rowVector = new T[Width];
+
+            for (var i = 0; i < Width; i++)
+                rowVector[i] = matrix[row, i];
+
+            return rowVector;
         }
     }
 

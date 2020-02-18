@@ -41,10 +41,7 @@ namespace GenericGenetics
 
         public void Mutate(double MutationRate)
         {
-            Genes = Genes.Select(g =>
-            {
-                return random.NextDouble() < MutationRate ? getRandomGene(random) : g;
-            }).ToArray();
+            Genes = Genes.Select(g => random.NextDouble() < MutationRate ? getRandomGene(random) : g).ToArray();
         }
     }
 }

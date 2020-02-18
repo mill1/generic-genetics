@@ -42,12 +42,28 @@ namespace GenericGenetics.Implementations
             {
                 // The residual for an observation is the difference between the observation and the fitted point.
                 // Some residuals are positive and some are negative.
-                double res = 1 - Math.Abs((double)result.residue * 10000000000000);
-                Console.WriteLine($"{res}");
+                // double res = 1 - Math.Abs((double)result.residue * 10000000000000);
+
+                //double[] someDoubles = result.distances.Select(x => (double)x).ToArray();
+                double[] someDoubles = new double[points.Length];
+
+                for (int i = 0; i < points.Length; i++)
+                    someDoubles[i] = Math.Abs(result.distances[i]);
+
+                double res = 1 - CalculateStandardDeviation(someDoubles);
+
+                // Console.WriteLine($"{res}");
                 return res;
             }
             else
                 throw new Exception("Could not compute.");
+        }
+
+        private double CalculateStandardDeviation(double[] someDoubles)
+        {
+            double average = someDoubles.Average();
+            double sumOfSquaresOfDifferences = someDoubles.Select(val => (val - average) * (val - average)).Sum();
+            return Math.Sqrt(sumOfSquaresOfDifferences / someDoubles.Length);
         }
 
         private string GetCircleFitJavaScript()
