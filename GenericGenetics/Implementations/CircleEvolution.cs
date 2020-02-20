@@ -7,7 +7,7 @@ namespace GenericGenetics.Implementations
     public class CircleEvolution : Evolution<Point>
     {
         private const double TARGET_CEILING = 10;
-        public override double TargetFitness { get; } = TARGET_CEILING - 0.5f;
+        public override double TargetFitness { get; } = TARGET_CEILING - 0.65f;
         public override int PopulationSize { get; }
         public override int DnaSize { get; set; }
         public override double MutationRate { get; } = 0.02f;
@@ -42,9 +42,9 @@ namespace GenericGenetics.Implementations
             return TARGET_CEILING - new PointsCalculator().Roundness(dna.Genes);
         }
 
-        public override void DisplayResult(Point[] bestGenes, double bestFitness, int generation)
+        public override void DisplayResult(DNA<Point> dna, int generation)
         {
-            matrix.Print(bestGenes, bestFitness, generation);
+            matrix.Print(dna, generation);
         }
     }
         
@@ -58,16 +58,18 @@ namespace GenericGenetics.Implementations
             Heigth = heigth;
         }
 
-        public void Print(Point[] bestGenes, double bestFitness, int generation)
+        public void Print(DNA<Point> dna, int generation)
         {
-            Console.WriteLine("\r\nGeneration: {0,4:####} Gene count: {1} score: {2}\r\n", generation, bestGenes.Length, bestFitness);
+            int geneCount = dna.Genes.Length;
 
-            char[,] chars = new char[bestGenes.Length, bestGenes.Length];
+            Console.WriteLine("\r\nGeneration: {0,4:####} Gene count: {1} score: {2}\r\n", generation, geneCount, dna.Fitness);
 
-            foreach (Point point in bestGenes)
+            char[,] chars = new char[geneCount, geneCount];
+
+            foreach (Point point in dna.Genes)
                 chars[(int)point.X, (int)point.Y] = '\u25A0';
 
-            Point center = new PointsCalculator().Center(bestGenes);
+            Point center = new PointsCalculator().Center(dna.Genes);
             chars[center.X, center.Y] = 'O';
 
             for (int i = 0; i < Width; i++)

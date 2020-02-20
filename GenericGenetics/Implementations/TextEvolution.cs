@@ -53,9 +53,9 @@ namespace GenericGenetics
             return score;
         }
 
-        public override void DisplayResult(char[] bestGenes, double bestFitness, int generation)
+        public override void DisplayResult(DNA<char> dna, int generation)
         {
-            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, bestFitness, new string(bestGenes));
+            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, dna.Fitness, new string(dna.Genes));
         }
     }
 }
