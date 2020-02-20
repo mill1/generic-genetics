@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace GenericGenetics
 {
@@ -26,10 +27,13 @@ namespace GenericGenetics
 
             GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
 
-            while (ga.BestFitness < TargetFitness)
+            double bestFitness = TargetFitness - 1;
+
+            while (bestFitness < TargetFitness)
             {
                 ga.SpawnNewGeneration();
-                DisplayResult(ga.BestGenes, ga.BestFitness, ga.Generation);
+                bestFitness = ga.Population.OrderByDescending(e => e.Fitness).First().Fitness;
+                DisplayResult(ga.BestGenes, bestFitness, ga.Generation);
             }
         }
     }

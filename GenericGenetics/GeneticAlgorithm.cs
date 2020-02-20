@@ -32,34 +32,44 @@ namespace GenericGenetics
 
         public void SpawnNewGeneration()
         {
+            // https://en.wikipedia.org/wiki/Percentile_rank
+            double partnerFitnessPercentile = 0.6f;
+
             Population.ForEach(e => e.CalculateFitness(e));
 
-            DetermineBestGenes();
+            StoreBestGenes();
 
             newPopulation.Clear();
 
-            Population.ForEach(e => newPopulation.Add(GetChild()));
+            // the number of members of the population beloning to the percentile. 
+            int elite = (int)(Population.Count * (1 - partnerFitnessPercentile));
+
+            double minimalParentFitness = Population.OrderByDescending(e => e.Fitness)
+                                          .Select(e => e.Fitness).Take(elite).Last();
+
+            Population.ForEach(e => newPopulation.Add(GetChild(minimalParentFitness)));
 
             // Save memory; switch between lists
             List<DNA<T>> tmpList = Population;
             Population = newPopulation;
+
             newPopulation = tmpList;
 
             Generation++;
         }
 
-        private void DetermineBestGenes()
+        private void StoreBestGenes()
         {
-            DNA<T> best = Population.OrderByDescending(e => e.Fitness).FirstOrDefault();
+            DNA<T> best = Population.OrderByDescending(e => e.Fitness).First();
 
             BestFitness = best.Fitness;
             best.Genes.CopyTo(BestGenes, 0);
         }
 
-        private DNA<T> GetChild()
+        private DNA<T> GetChild(double minimalParentFitness)
         {
-            DNA<T> parent1 = ChooseParent(isMale: true);
-            DNA<T> parent2 = ChooseParent(isMale: false);
+            DNA<T> parent1 = ChooseParent(isMale: true, minimalParentFitness);
+            DNA<T> parent2 = ChooseParent(isMale: false, minimalParentFitness);
 
             DNA<T> child = parent1.Crossover(parent2);
 
@@ -67,16 +77,14 @@ namespace GenericGenetics
             return child;
         }
 
-        private DNA<T> ChooseParent(bool isMale)
+        private DNA<T> ChooseParent(bool isMale, double minimalParentFitness)
         {
-            double average = Population.Select(e => e.Fitness).Average();
-
             while (true)
             {
-                int i = (int)(Population.Count * random.NextDouble());
+                int i = (int)(random.NextDouble() * Population.Count);
 
                 if (Population[i].IsMale != isMale)
-                    if (Population[i].Fitness >= average)
+                    if (Population[i].Fitness >= minimalParentFitness)
                         return Population[i];
             }
         }

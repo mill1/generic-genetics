@@ -1,5 +1,4 @@
-﻿using Jint;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,36 +6,30 @@ namespace GenericGenetics.Implementations
 {
     public class CircleEvolution : Evolution<Point>
     {
-        public override double TargetFitness { get; } = 0.92f;
-        public override int PopulationSize { get; } = 200;
+        private const double TARGET_CEILING = 10;
+        public override double TargetFitness { get; } = TARGET_CEILING - 0.5f;
+        public override int PopulationSize { get; }
         public override int DnaSize { get; set; }
         public override double MutationRate { get; } = 0.02f;
 
-        private CircleFit circleFit;
         private Matrix matrix;
 
         public CircleEvolution()
         {
-            circleFit = new CircleFit();
+            Console.WriteLine("Population size:");
+            PopulationSize = int.Parse(Console.ReadLine());
         }
 
         public override void GetInput()
         {
-            // Matrix: nr of columns: 8
-            // Nr of points(< 64): 22
-
-            Console.WriteLine("Matrix: nr of columns:");
+            Console.WriteLine("Output: column size:");
             int width = int.Parse(Console.ReadLine());
             int height = width;
-            // Ellipse later;
-            //Console.WriteLine("Matrix: nr of rows:");
-            //int height = int.Parse(Console.ReadLine());
 
             matrix = new Matrix(width, height);
 
-            Console.WriteLine($"Nr of points (< {width * height}):");
+            Console.WriteLine($"number of points (< {width * height}):");
             DnaSize = int.Parse(Console.ReadLine());
-
         }
 
         public override Point GetRandomGene(Random random)
@@ -46,7 +39,7 @@ namespace GenericGenetics.Implementations
 
         public override double DetermineFitness(DNA<Point> dna)
         {
-            return circleFit.CalculateFitness(dna.Genes);
+            return TARGET_CEILING - new PointsCalculator().Roundness(dna.Genes);
         }
 
         public override void DisplayResult(Point[] bestGenes, double bestFitness, int generation)
@@ -72,7 +65,10 @@ namespace GenericGenetics.Implementations
             char[,] chars = new char[bestGenes.Length, bestGenes.Length];
 
             foreach (Point point in bestGenes)
-                chars[point.X, point.Y] = '\u25A0';
+                chars[(int)point.X, (int)point.Y] = '\u25A0';
+
+            Point center = new PointsCalculator().Center(bestGenes);
+            chars[center.X, center.Y] = 'O';
 
             for (int i = 0; i < Width; i++)
             {
@@ -96,6 +92,8 @@ namespace GenericGenetics.Implementations
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public double DistanceToCenter { get; set; }
+
         public Point(int x, int y)
         {
             X = x;

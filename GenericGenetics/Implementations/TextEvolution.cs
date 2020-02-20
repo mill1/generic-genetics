@@ -5,14 +5,18 @@ namespace GenericGenetics
 {
     public class TextEvolution : Evolution<char>
     {
-        public override double TargetFitness { get; } = 1;
-        public override int PopulationSize { get; } = 150;
+        public override double TargetFitness { get; } = 0.8f; // 1;
+        public override int PopulationSize { get; }
         public override int DnaSize { get; set; }
         public override double MutationRate { get; } = 0.01f;
 
-        private string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
+        private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
         private string targetText;
 
+        public TextEvolution()
+        {
+            PopulationSize = 100;
+        }
         public override void GetInput()
         {
             Console.WriteLine("Target text:");
