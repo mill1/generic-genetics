@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace GenericGenetics
 {
@@ -7,7 +8,7 @@ namespace GenericGenetics
         Random random;
         public abstract void GetInput();
 
-        public abstract void DisplayResult(T[] bestGenes, double bestFitness, int generation);
+        public abstract void DisplayResult(DNA<T> dna, int generation);
 
         public abstract double TargetFitness { get; }
         public abstract int PopulationSize { get; }
@@ -20,17 +21,29 @@ namespace GenericGenetics
 
         public void Run()
         {
+            int generation = 1;
+            DNA<T> bestDNA;
+
             random = new Random();
 
             GetInput();
 
             GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
 
-            while (ga.BestFitness < TargetFitness)
+            double bestFitness = TargetFitness - 1;
+
+            while (bestFitness < TargetFitness)
             {
                 ga.SpawnNewGeneration();
-                DisplayResult(ga.BestGenes, ga.BestFitness, ga.Generation);
+                bestDNA = ga.NewPopulation.OrderByDescending(e => e.Fitness).First();
+                bestFitness = bestDNA.Fitness;
+
+                DisplayResult(bestDNA, generation++);
             }
+
+            //Worst DNA in population:
+            bestDNA = ga.NewPopulation.OrderByDescending(e => e.Fitness).Last();
+            DisplayResult(bestDNA, --generation);
         }
     }
 }

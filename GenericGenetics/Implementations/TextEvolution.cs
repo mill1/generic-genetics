@@ -5,14 +5,18 @@ namespace GenericGenetics
 {
     public class TextEvolution : Evolution<char>
     {
-        public override double TargetFitness { get; } = 1;
-        public override int PopulationSize { get; } = 150;
+        public override double TargetFitness { get; } = 0.8f; // 1;
+        public override int PopulationSize { get; }
         public override int DnaSize { get; set; }
         public override double MutationRate { get; } = 0.01f;
 
-        private string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
+        private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
         private string targetText;
 
+        public TextEvolution()
+        {
+            PopulationSize = 100;
+        }
         public override void GetInput()
         {
             Console.WriteLine("Target text:");
@@ -49,9 +53,9 @@ namespace GenericGenetics
             return score;
         }
 
-        public override void DisplayResult(char[] bestGenes, double bestFitness, int generation)
+        public override void DisplayResult(DNA<char> dna, int generation)
         {
-            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, bestFitness, new string(bestGenes));
+            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, dna.Fitness, new string(dna.Genes));
         }
     }
 }
