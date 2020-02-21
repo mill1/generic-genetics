@@ -6,60 +6,51 @@ namespace GenericGenetics
 {
     public class GeneticAlgorithm<T>
     {
-        public List<DNA<T>> Population { get; private set; }
-        public int Generation { get; private set; }
-        public double BestFitness { get; private set; }
-        public T[] BestGenes { get; private set; }
+        public List<DNA<T>> NewPopulation { get; private set; }
         public double MutationRate { get; private set; }
 
-        private List<DNA<T>> newPopulation;
+        private List<DNA<T>> population;
         private readonly Random random;
 
         public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<Random, T> getRandomGene,
                                 Func<DNA<T>, double> determineFitness, double mutationRate)
         {
-            Generation = 1;
             MutationRate = mutationRate;
-            Population = new List<DNA<T>>(populationSize);
-            newPopulation = new List<DNA<T>>(populationSize);
+            population = new List<DNA<T>>(populationSize);
+            NewPopulation = new List<DNA<T>>(populationSize);
             this.random = random;
 
-            BestGenes = new T[dnaSize];
-
-            Population = Enumerable.Range(0, populationSize).Select(
+            population = Enumerable.Range(0, populationSize).Select(
                 e => new DNA<T>(dnaSize, random, getRandomGene, determineFitness, InitializeGenes: true)).ToList();
         }
 
         public void SpawnNewGeneration()
         {
-            Population.ForEach(e => e.CalculateFitness(e));
+            // https://en.wikipedia.org/wiki/Percentile_rank
+            double partnerFitnessPercentile = 0.75f;
 
-            DetermineBestGenes();
+            population.ForEach(e => e.CalculateFitness(e));
 
-            newPopulation.Clear();
+            NewPopulation.Clear();
 
-            Population.ForEach(e => newPopulation.Add(GetChild()));
+            // the number of members of the population beloning to the percentile. 
+            int elite = (int)(population.Count * (1 - partnerFitnessPercentile));
+
+            double minimalParentFitness = population.OrderByDescending(e => e.Fitness)
+                                          .Select(e => e.Fitness).Take(elite).Last();
+
+            population.ForEach(e => NewPopulation.Add(GetChild(minimalParentFitness)));
 
             // Save memory; switch between lists
-            List<DNA<T>> tmpList = Population;
-            Population = newPopulation;
-            newPopulation = tmpList;
-
-            Generation++;
+            List<DNA<T>> tmpList = population;
+            population = NewPopulation;
+            NewPopulation = tmpList;
         }
 
-        private void DetermineBestGenes()
+        private DNA<T> GetChild(double minimalParentFitness)
         {
-            DNA<T> best = Population.OrderByDescending(e => e.Fitness).FirstOrDefault();
-
-            BestFitness = best.Fitness;
-            best.Genes.CopyTo(BestGenes, 0);
-        }
-
-        private DNA<T> GetChild()
-        {
-            DNA<T> parent1 = ChooseParent(isMale: true);
-            DNA<T> parent2 = ChooseParent(isMale: false);
+            DNA<T> parent1 = ChooseParent(isMale: true, minimalParentFitness);
+            DNA<T> parent2 = ChooseParent(isMale: false, minimalParentFitness);
 
             DNA<T> child = parent1.Crossover(parent2);
 
@@ -67,17 +58,15 @@ namespace GenericGenetics
             return child;
         }
 
-        private DNA<T> ChooseParent(bool isMale)
+        private DNA<T> ChooseParent(bool isMale, double minimalParentFitness)
         {
-            double average = Population.Select(e => e.Fitness).Average();
-
             while (true)
             {
-                int i = (int)(Population.Count * random.NextDouble());
+                int i = (int)(random.NextDouble() * population.Count);
 
-                if (Population[i].IsMale != isMale)
-                    if (Population[i].Fitness >= average)
-                        return Population[i];
+                if (population[i].IsMale != isMale)
+                    if (population[i].Fitness >= minimalParentFitness)
+                        return population[i];
             }
         }
     }
