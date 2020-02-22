@@ -5,17 +5,19 @@ using System.Text;
 namespace GenericGenetics.UI
 {
     // This class implements the console user interface of the application.
+    // It compiles stuff here that will be used in the runner consumer.
     public class Runner
     {
-        private readonly Interfaces.IUICircleEvolution ui;
-        public Runner(Interfaces.IUICircleEvolution ui)
+        private readonly Interfaces.IUI ui;
+
+        public Runner(Interfaces.IUI ui)
         {
             this.ui = ui;
         }
 
         public void Run()
         {
-            ui.Run(ui);
+            ui.Run(ui, "Runner");
         }
     }
 }

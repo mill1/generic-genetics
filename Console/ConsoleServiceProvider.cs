@@ -9,7 +9,7 @@ namespace ConsoleUI
         public static IServiceCollection RegisterAppComponents(this IServiceCollection collection)
         {
             collection
-                .AddScoped<GenericGenetics.Interfaces.IUICircleEvolution, UICircleEvolution>()
+                .AddScoped<GenericGenetics.Interfaces.IUI, CircleEvolutionUI>()
                 .AddScoped<GenericGenetics.UI.Runner>();
 
             return collection;

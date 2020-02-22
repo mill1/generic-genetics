@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericGenetics.Interfaces;
+using System;
 using System.Linq;
 
 namespace GenericGenetics
@@ -8,7 +9,7 @@ namespace GenericGenetics
         Random random;
 
         private double TargetFitness { get; }
-        public int PopulationSize { get; }
+        private int PopulationSize { get; }
         private int DnaSize { get; }
         public int DnaMinValue { get; }
         public int DnaMaxValue { get; }
@@ -18,17 +19,16 @@ namespace GenericGenetics
         public abstract T GetRandomGene(Random random);
         public abstract double DetermineFitness(DNA<T> genotype);
 
-        public Evolution(double targetFitness,  int populationSize, int dnaSize, int dnaMinValue, int dnaMaxValue, double mutationRate)
+        public Evolution(Parameters parameters)
         {
-            TargetFitness = targetFitness;
-            PopulationSize = populationSize;
-            DnaSize = dnaSize;
-            DnaMinValue = dnaMinValue;
-            DnaMaxValue = dnaMaxValue;
-            MutationRate = mutationRate;
+            TargetFitness = parameters.TargetFitness;
+            PopulationSize = parameters.PopulationSize;
+            DnaSize = parameters.DnaSize;
+            DnaMinValue = parameters.DnaMinValue;
+            DnaMaxValue = parameters.DnaMaxValue;
+            MutationRate = parameters.MutationRate;
         }
 
-        // TODO targetFitness en MutationRate als arguments
         public void Run(Action<DNA<T>, int> displayPhenotype)
         {
             DNA<T> genotype;

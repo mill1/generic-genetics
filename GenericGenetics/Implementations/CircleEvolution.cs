@@ -6,8 +6,7 @@ namespace GenericGenetics.Implementations
 {
     public class CircleEvolution : Evolution<Point>
     {
-        public CircleEvolution(double targetFitness, int populationSize, int dnaSize, int dnaMinValue, int dnaMaxValue, double mutationRate)
-                              : base( targetFitness, populationSize, dnaSize, dnaMinValue, dnaMaxValue, mutationRate)
+        public CircleEvolution(Parameters parameters): base( parameters)
         {
         }
 
