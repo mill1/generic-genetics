@@ -25,9 +25,9 @@ namespace GenericGenetics
                 Genes = Genes.Select(g => getRandomGene(random)).ToArray();
         }
 
-        public void CalculateFitness(DNA<T> dna)
+        public void CalculateFitness(DNA<T> genotype)
         {
-            Fitness = determineFitness(dna);
+            Fitness = determineFitness(genotype);
         }
 
         public DNA<T> Crossover(DNA<T> otherParent)
