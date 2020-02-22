@@ -34,11 +34,11 @@ namespace GenericGenetics
             return validCharacters[i];
         }
 
-        public override double DetermineFitness(DNA<char> dna)
+        public override double DetermineFitness(DNA<char> genotype)
         {
             double score = 0;
 
-            dna.Genes.Select((g, i) =>
+            genotype.Genes.Select((g, i) =>
             {
                 score += (g == targetText[i] ? 1 : 0);
                 return i;
@@ -53,9 +53,9 @@ namespace GenericGenetics
             return score;
         }
 
-        public override void DisplayResult(DNA<char> dna, int generation)
+        public override void DisplayPhenotype(DNA<char> genotype, int generation)
         {
-            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, dna.Fitness, new string(dna.Genes));
+            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, genotype.Fitness, new string(genotype.Genes));
         }
     }
 }

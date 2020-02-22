@@ -10,6 +10,7 @@
 /GenericGenetics/bin/Debug/netcoreapp3.0
 *.dtbcache
 /.vs/GenericGenetics/v15/Server/sqlite3
+/.vs/GenericGenetics/v16/Server/sqlite3
 /.vs/GenericGenetics/v15/Server/sqlite3/storage.ide
 /GenericGenetics/obj
 /.vs/GenericGenetics/v16/Server/sqlite3/db.lock
@@ -17,4 +18,5 @@
 *.sqlite
 /.vs/ProjectSettings.json
 /.vs/GenericGenetics/v16/Server/sqlite3/storage.ide-wal
+
 

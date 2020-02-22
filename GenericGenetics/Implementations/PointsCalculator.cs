@@ -10,11 +10,8 @@ namespace GenericGenetics.Implementations
         {
             Point center = Center(points);
 
-            foreach (Point point in points)
-                point.DistanceToCenter = GetDistance(point, center);
-
+            points.ToList().ForEach(p => p.DistanceToCenter = GetDistance(p, center));
             IEnumerable<double> distancesToCenter = points.Select(p => p.DistanceToCenter);
-
             double roundness = GetStandardDeviation(distancesToCenter);
 
             return roundness;

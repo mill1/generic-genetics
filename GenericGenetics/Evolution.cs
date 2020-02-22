@@ -8,7 +8,7 @@ namespace GenericGenetics
         Random random;
         public abstract void GetInput();
 
-        public abstract void DisplayResult(DNA<T> dna, int generation);
+        public abstract void DisplayPhenotype(DNA<T> genotype, int generation);
 
         public abstract double TargetFitness { get; }
         public abstract int PopulationSize { get; }
@@ -17,12 +17,12 @@ namespace GenericGenetics
 
         // Delegates
         public abstract T GetRandomGene(Random random);
-        public abstract double DetermineFitness(DNA<T> dna);
+        public abstract double DetermineFitness(DNA<T> genotype);
 
         public void Run()
         {
             int generation = 1;
-            DNA<T> bestDNA;
+            DNA<T> genotype;
 
             random = new Random();
 
@@ -35,15 +35,15 @@ namespace GenericGenetics
             while (bestFitness < TargetFitness)
             {
                 ga.SpawnNewGeneration();
-                bestDNA = ga.NewPopulation.OrderByDescending(e => e.Fitness).First();
-                bestFitness = bestDNA.Fitness;
+                genotype = ga.NewPopulation.OrderByDescending(e => e.Fitness).First();
+                bestFitness = genotype.Fitness;
 
-                DisplayResult(bestDNA, generation++);
+                DisplayPhenotype(genotype, generation++);
             }
 
             //Worst DNA in population:
-            bestDNA = ga.NewPopulation.OrderByDescending(e => e.Fitness).Last();
-            DisplayResult(bestDNA, --generation);
+            genotype = ga.NewPopulation.OrderByDescending(e => e.Fitness).Last();
+            DisplayPhenotype(genotype, --generation);
         }
     }
 }
