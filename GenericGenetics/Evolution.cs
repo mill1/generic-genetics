@@ -1,5 +1,4 @@
-﻿using GenericGenetics.Interfaces;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace GenericGenetics
@@ -9,15 +8,16 @@ namespace GenericGenetics
         Random random;
 
         private double TargetFitness { get; }
-        private int PopulationSize { get; }
-        private int DnaSize { get; }
-        public int DnaMinValue { get; }
-        public int DnaMaxValue { get; }
+        private int PopulationSize { get;  }
+        private int DnaSize { get;  }
+        internal int DnaMinValue { get;  }
+        internal int DnaMaxValue { get;  }
         private double MutationRate { get; }
 
         // Delegates
-        public abstract T GetRandomGene(Random random);
-        public abstract double DetermineFitness(DNA<T> genotype);
+        internal abstract T GetRandomGene(Random random);
+
+        internal abstract double DetermineFitness(DNA<T> genotype);
 
         public Evolution(Parameters parameters)
         {

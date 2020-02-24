@@ -8,21 +8,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            IServiceCollection services = BuildServiceCollection();
-            using (ServiceProvider sp = services.BuildServiceProvider())
-            {
-                var r = sp.GetService<GenericGenetics.UI.Runner>();
-                r.Run();
-            }
-        }
-
-        private static IServiceCollection BuildServiceCollection()
-        {
-            IServiceCollection services = new ServiceCollection();
-
-            services.RegisterAppComponents();
-
-            return services;
+            // new TextEvolutionUI().Run(0.80f, 0.01f);
+            new CircleEvolutionUI().Run(8.55f, 0.02f);
         }
     }
 }

@@ -3,60 +3,39 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    // TODO
-    //public class TextEvolution : Evolution<char>
-    //{
-    //    public override double TargetFitness { get; } = 0.8f; // 1;
-    //    public override int PopulationSize { get; }
-    //    public override int DnaSize { get; set; }
-    //    public override double MutationRate { get; } = 0.01f;
+    public class TextEvolution : Evolution<char>
+    {
+        private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
 
-    //    private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
-    //    private string targetText;
+        public string TargetText { get; set; }
 
-    //    public TextEvolution()
-    //    {
-    //        PopulationSize = 100;
-    //    }
-    //    public override void GetInput()
-    //    {
-    //        Console.WriteLine("Target text:");
-    //        targetText = Console.ReadLine(); ;
+        public TextEvolution(Parameters parameters) : base(parameters)
+        {
+        }
 
-    //        if (string.IsNullOrEmpty(targetText))
-    //            throw new Exception("Input is null or empty");
+        internal override double DetermineFitness(DNA<char> genotype)
+        {
+            double score = 0;
 
-    //        DnaSize = targetText.Length;
-    //    }
+            genotype.Genes.Select((c, i) =>
+            {
+                score += (c == TargetText[i] ? 1 : 0);
+                return i;
+            }).ToList();
 
-    //    public override char GetRandomGene(Random random)
-    //    {
-    //        int i = random.Next(validCharacters.Length);
-    //        return validCharacters[i];
-    //    }
+            score /= TargetText.Length;
 
-    //    public override double DetermineFitness(DNA<char> genotype)
-    //    {
-    //        double score = 0;
+            // value proportional improvement by using exponent
+            int exp = 2;
+            score = (double)(Math.Pow(exp, score) - 1) / (exp - 1);
 
-    //        genotype.Genes.Select((g, i) =>
-    //        {
-    //            score += (g == targetText[i] ? 1 : 0);
-    //            return i;
-    //        }).ToList();
+            return score;
+        }
 
-    //        score /= targetText.Length;
-
-    //        // value proportional improvement by using exponent
-    //        int exp = 2;
-    //        score = (double)(Math.Pow(exp, score) - 1) / (exp - 1);
-
-    //        return score;
-    //    }
-
-    //    public override void DisplayPhenotype(DNA<char> genotype, int generation)
-    //    {
-    //        Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, genotype.Fitness, new string(genotype.Genes));
-    //    }
-    //}
+        internal override char GetRandomGene(Random random)
+        {
+            int i = random.Next(validCharacters.Length);
+            return validCharacters[i];
+        }
+    }
 }

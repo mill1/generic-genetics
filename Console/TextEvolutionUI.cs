@@ -6,34 +6,32 @@ using System.Text;
 
 namespace ConsoleUI
 {
-    public class CircleEvolutionUI
+    public class TextEvolutionUI
     {
-        private int dnaMaxValue;
 
         public void Run(double targetFitness, double mutationRate)
         {
             try
             {
+                Console.WriteLine("Target text:");
+                string targetText = Console.ReadLine();
+
                 Console.WriteLine("Population size:");
                 int populationSize = int.Parse(Console.ReadLine());
 
-                Console.WriteLine($"Number of points:");
-                int dnaSize = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Max. x/y value:");
-                dnaMaxValue = int.Parse(Console.ReadLine());
-
-                CircleEvolution evolution = new CircleEvolution(
-
+                TextEvolution evolution = new TextEvolution(
                     new Parameters()
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaSize = dnaSize,
+                        DnaSize = targetText.Length,
                         DnaMinValue = 0,
-                        DnaMaxValue = dnaMaxValue,
+                        DnaMaxValue = -1, // = TextEvolution.validCharacters.Length
                         MutationRate = mutationRate
                     });
+
+                // This weird structure is a result of the fact that a specific end state is sought.
+                evolution.TargetText = targetText;
 
                 evolution.Run(DisplayPhenotype);
             }
@@ -47,10 +45,9 @@ namespace ConsoleUI
             }
         }
 
-        private void DisplayPhenotype(DNA<global::Point> genotype, int generation)
+        private void DisplayPhenotype(DNA<char> genotype, int generation)
         {
-            Matrix matrix = new Matrix(dnaMaxValue, dnaMaxValue);
-            matrix.Print(genotype, generation);
+            Console.WriteLine("{0,5:#####} {1,6:0.0000} {2}", generation, genotype.Fitness, new string(genotype.Genes));
         }
     }
 }

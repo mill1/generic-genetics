@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GenericGenetics;
+using System;
 
 namespace ConsoleUI
 {
@@ -43,6 +44,11 @@ namespace ConsoleUI
                 sys.Console.ForegroundColor = sys.ConsoleColor.White;
                 sys.Console.WriteLine(GetRow(chars, i));
             }
+        }
+
+        internal void Print<Point>(DNA<Point> genotype, int generation)
+        {
+            throw new NotImplementedException();
         }
 
         private T[] GetRow<T>(T[,] matrix, int row)
