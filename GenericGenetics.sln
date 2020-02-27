@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericGenetics", "GenericG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "Console\ConsoleUI.csproj", "{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormGraphics", "..\WindowsFormsGraphics\WinFormGraphics\WinFormGraphics.csproj", "{F4CC94C2-F422-4735-B858-23C39B10A938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormGraphics", "WinFormGraphics\WinFormGraphics.csproj", "{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4CC94C2-F422-4735-B858-23C39B10A938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4CC94C2-F422-4735-B858-23C39B10A938}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4CC94C2-F422-4735-B858-23C39B10A938}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4CC94C2-F422-4735-B858-23C39B10A938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
