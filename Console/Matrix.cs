@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GenericGenetics;
 using System;
+using GenericGenetics.Implementations;
 
 namespace ConsoleUI
 {

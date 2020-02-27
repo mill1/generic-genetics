@@ -47,7 +47,7 @@ namespace ConsoleUI
             }
         }
 
-        private void DisplayPhenotype(DNA<global::Point> genotype, int generation)
+        private void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
             Matrix matrix = new Matrix(dnaMaxValue, dnaMaxValue);
             matrix.Print(genotype, generation);
