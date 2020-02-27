@@ -37,9 +37,9 @@ using System.Drawing.Drawing2D;
 
 namespace WinFormGraphics.OrigForm
 {
-    public partial class MainForm : Form
+    public partial class MainOrigForm : Form
     {
-        public MainForm()
+        public MainOrigForm()
         {
             InitializeComponent();
         }

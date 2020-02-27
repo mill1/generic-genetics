@@ -35,46 +35,73 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using GenericGenetics;
+using GenericGenetics.Implementations;
+using Point = System.Drawing.Point;
 
 namespace WinFormGraphics
 {
     public partial class MainForm : Form
     {
-        private IEnumerable<Point> Points { get; set; }
+        private IEnumerable<Point> points = new List<Point>();
+        private int generation;
+        private double fitness;
 
         public MainForm()
         {
-            Points = new List<Point>(){
-                    new Point(40,250),
-                    new Point(80,300),
-                    new Point(120,200)};
-
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             InitializeComponent();
         }
 
         //Perform any action on click action method
         private void Button1_Click(object sender, EventArgs e)
-        {            
-            MessageBox.Show("Button was clicked");
+        {
+            CircleEvolution evolution = new CircleEvolution(
+                new Parameters()
+                {
+                    TargetFitness = 8.05f,
+                    PopulationSize = 50, //100,
+                    DnaSize = 550, //300,
+                    DnaMinValue = 0,
+                    DnaMaxValue = 50,
+                    MutationRate = 0.01
+                });
+
+            evolution.Run(DisplayPhenotype);
+        }
+
+        private void DisplayPhenotype(DNA<GenericGenetics.Implementations.Point> genotype, int generation)
+        {
+
+            points = genotype.Genes.Select(g => new Point(Adjust(g.X, false), Adjust(g.Y, true)));
+            this.generation = generation;
+            fitness = genotype.Fitness;
+
             Refresh();
+        }
+
+        private int Adjust(int i, bool isY)
+        {
+            return i * 12 + ( isY ? 85 : 50);
         }
 
         public override void Refresh()
         {
-            Points = new List<Point>(){
-                    new Point(40,40),
-                    new Point(80,80),
-                    new Point(120,120)};
-
             base.Refresh();
         }
 
-        private void groupBox1_Paint(object sender, PaintEventArgs e)
-        {            
-            DrawEllipseRectangles(e, Points);
+        protected override void OnPaint(PaintEventArgs e) 
+        {
+            label1.Text = $"Generation {generation}, Fitness: {fitness.ToString("0.00000")}";
+
+            if (points.Count() == 0)
+                return;
+
+            DrawEllipseRectangles(e);
         }
 
-        private void DrawEllipseRectangles(PaintEventArgs e, IEnumerable<Point> points)
+
+        private void DrawEllipseRectangles(PaintEventArgs e)
         {
             using (var pen = new Pen(Color.Black, 1))
             {
@@ -90,27 +117,6 @@ namespace WinFormGraphics
 
             // Draw ellipse to screen.
             e.Graphics.DrawEllipse(pen, rect);
-        }
-
-
-
-        private void ObsoleteMethod(PaintEventArgs e)
-        {
-            using (var p = new Pen(Color.Black))
-            {
-                // Specify a collection of points for the curve.
-                var points = new Point[]{
-                    new Point(40,250),
-                    new Point(80,300),
-                    new Point(120,200)};
-
-                e.Graphics.DrawCurve(p, points);
-
-                e.Graphics.DrawString(
-                        "This is a horizontal text.",
-                        this.Font, new SolidBrush(Color.Red), 450, 90, new StringFormat());
-
-            }
         }
     }
 }

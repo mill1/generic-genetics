@@ -1,6 +1,6 @@
 ﻿namespace WinFormGraphics.OrigForm
 {
-    partial class MainForm
+    partial class MainOrigForm
     {
         /// <summary>
         /// Required designer variable.

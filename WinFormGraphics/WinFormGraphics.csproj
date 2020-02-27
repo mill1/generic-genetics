@@ -27,11 +27,11 @@
     <Compile Update="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>  
-    <Compile Update="OrigForm\MainForm.cs">
+    <Compile Update="OrigForm\MainOrigForm.cs">
       <SubType>Form</SubType>
     </Compile>  
-    <Compile Update="OrigForm\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Update="OrigForm\MainOrigForm.Designer.cs">
+      <DependentUpon>MainOrigForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
 

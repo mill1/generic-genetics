@@ -13,11 +13,8 @@ namespace WinFormGraphics
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new OrigForm.MainForm());
-
-
+            //Application.Run(new OrigForm.MainOrigForm());
             Application.Run(new MainForm());
-
         }
     }
 }
