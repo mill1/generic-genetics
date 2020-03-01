@@ -12,7 +12,7 @@ namespace GenericGenetics.Implementations
 
         internal override double DetermineFitness(DNA<Point> genotype)
         {
-            return 10 - new PointsCalculator().Roundness(genotype.Genes);
+            return new PointsCalculator().Roundness(genotype.Genes);
         }
 
         internal override Point GetRandomGene(Random random)

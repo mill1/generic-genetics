@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\generic-genetics\GenericGenetics\GenericGenetics.csproj" />
+    <ProjectReference Include="..\GenericGenetics\GenericGenetics.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,8 +24,8 @@
         Optionally, they can be updated as demonstrated here
         so that dependent files will appear as expected in
         Visual Studio's solution explorer. -->  
-    <Compile Update="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Update="CircleEvolutionForm.Designer.cs">
+      <DependentUpon>CircleEvolutionForm.cs</DependentUpon>
     </Compile>  
     <Compile Update="OrigForm\MainOrigForm.cs">
       <SubType>Form</SubType>

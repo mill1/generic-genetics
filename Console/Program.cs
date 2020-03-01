@@ -8,8 +8,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            // new TextEvolutionUI().Run(0.80f, 0.01f);
-            new CircleEvolutionUI().Run(8.55f, 0.02f);
+            //new TextEvolutionUI().Run(0.01f, 0.01f);
+            new CircleEvolutionUI().Run(1.95f, 0.02f);
         }
     }
 }

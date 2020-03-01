@@ -29,12 +29,12 @@ namespace GenericGenetics
             int exp = 2;
             score = (double)(Math.Pow(exp, score) - 1) / (exp - 1);
 
-            return score;
+            return 1 - score;
         }
 
         internal override char GetRandomGene(Random random)
         {
-            int i = random.Next(validCharacters.Length);
+            int i = random.Next(DnaMinValue, validCharacters.Length);
             return validCharacters[i];
         }
     }

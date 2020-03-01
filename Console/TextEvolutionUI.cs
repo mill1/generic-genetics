@@ -8,7 +8,6 @@ namespace ConsoleUI
 {
     public class TextEvolutionUI
     {
-
         public void Run(double targetFitness, double mutationRate)
         {
             try
@@ -26,7 +25,7 @@ namespace ConsoleUI
                         PopulationSize = populationSize,
                         DnaSize = targetText.Length,
                         DnaMinValue = 0,
-                        DnaMaxValue = -1, // = TextEvolution.validCharacters.Length
+                        DnaMaxValue = -1, // = nr of ValidCharacters
                         MutationRate = mutationRate
                     });
 
