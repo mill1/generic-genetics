@@ -38,12 +38,12 @@ namespace GenericGenetics
 
             GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
 
-            double bestFitness = TargetFitness - 1;
+            double bestFitness = TargetFitness + 1;
 
-            while (bestFitness < TargetFitness)
+            while (bestFitness > TargetFitness)
             {
                 ga.SpawnNewGeneration();
-                genotype = ga.NewPopulation.OrderByDescending(e => e.Fitness).First();
+                genotype = ga.NewPopulation.OrderBy(e => e.Fitness).First();
                 bestFitness = genotype.Fitness;
 
                 displayPhenotype(genotype, generation++);

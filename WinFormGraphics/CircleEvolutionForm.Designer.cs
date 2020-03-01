@@ -1,6 +1,6 @@
 ﻿namespace WinFormGraphics
 {
-    partial class MainForm
+    partial class CircleEvolutionForm
     {
         /// <summary>
         /// Required designer variable.
