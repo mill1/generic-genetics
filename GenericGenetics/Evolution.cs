@@ -7,26 +7,26 @@ namespace GenericGenetics
     {
         Random random;
 
-        private double TargetFitness { get; }
-        private int PopulationSize { get;  }
-        private int DnaSize { get;  }
-        internal int DnaMinValue { get;  }
-        internal int DnaMaxValue { get;  }
-        private double MutationRate { get; }
+        private double targetFitness;
+        private int populationSize;
+        private int dnaSize;
+        internal int DnaMinValue { get; set; }
+        internal int DnaMaxValue { get; set; }
+        private double mutationRate;
 
         // Delegates
         internal abstract T GetRandomGene(Random random);
 
         internal abstract double DetermineFitness(DNA<T> genotype);
 
-        public Evolution(Parameters parameters)
+        public void SetParameters(Parameters parameters)
         {
-            TargetFitness = parameters.TargetFitness;
-            PopulationSize = parameters.PopulationSize;
-            DnaSize = parameters.DnaSize;
+            targetFitness = parameters.TargetFitness;
+            populationSize = parameters.PopulationSize;
+            dnaSize = parameters.DnaSize;
             DnaMinValue = parameters.DnaMinValue;
             DnaMaxValue = parameters.DnaMaxValue;
-            MutationRate = parameters.MutationRate;
+            mutationRate = parameters.MutationRate;
         }
 
         public void Run(Action<DNA<T>, int> displayPhenotype)
@@ -36,11 +36,11 @@ namespace GenericGenetics
 
             random = new Random();
 
-            GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
+            GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(populationSize, dnaSize, random, GetRandomGene, DetermineFitness, mutationRate);
 
-            double bestFitness = TargetFitness + 1;
+            double bestFitness = targetFitness + 1;
 
-            while (bestFitness > TargetFitness)
+            while (bestFitness > targetFitness)
             {
                 ga.SpawnNewGeneration();
                 genotype = ga.NewPopulation.OrderBy(e => e.Fitness).First();

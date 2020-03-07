@@ -36,7 +36,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblGenerationCount = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +49,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblGenerationCount);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(18, 12);
             this.groupBox1.Name = "groupBox1";
@@ -122,14 +122,14 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "1. Draw a line.";
             // 
-            // label1
+            // lblGenerationCount
             // 
-            this.label1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(31, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(648, 22);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "This example demonstrates basic drawings in Windows Forms application.";
+            this.lblGenerationCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGenerationCount.Location = new System.Drawing.Point(31, 31);
+            this.lblGenerationCount.Name = "lblGenerationCount";
+            this.lblGenerationCount.Size = new System.Drawing.Size(648, 22);
+            this.lblGenerationCount.TabIndex = 0;
+            this.lblGenerationCount.Text = "This example demonstrates basic drawings in Windows Forms application.";
             // 
             // MainForm
             // 
@@ -152,7 +152,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblGenerationCount;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;

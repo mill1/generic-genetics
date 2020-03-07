@@ -23,8 +23,9 @@ namespace ConsoleUI
                 Console.WriteLine("Max. x/y value:");
                 dnaMaxValue = int.Parse(Console.ReadLine());
 
-                CircleEvolution evolution = new CircleEvolution(
+                CircleEvolution evolution = new CircleEvolution();
 
+                evolution.SetParameters(
                     new Parameters()
                     {
                         TargetFitness = targetFitness,

@@ -18,7 +18,9 @@ namespace ConsoleUI
                 Console.WriteLine("Population size:");
                 int populationSize = int.Parse(Console.ReadLine());
 
-                TextEvolution evolution = new TextEvolution(
+                TextEvolution evolution = new TextEvolution();
+
+                evolution.SetParameters(
                     new Parameters()
                     {
                         TargetFitness = targetFitness,

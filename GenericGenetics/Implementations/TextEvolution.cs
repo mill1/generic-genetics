@@ -3,15 +3,11 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TextEvolution : Evolution<char>
+    public class TextEvolution : Evolution<char>, IEvolution<char>
     {
         private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
 
         public string TargetText { get; set; }
-
-        public TextEvolution(Parameters parameters) : base(parameters)
-        {
-        }
 
         internal override double DetermineFitness(DNA<char> genotype)
         {
