@@ -17,10 +17,12 @@ namespace ConsoleUI
                 Point p1 = new Point(1, 2);
                 Point p2 = new Point(3, 4);
 
-                //Console.WriteLine(p2.Equals(p1));
-                //Console.WriteLine((p1+p2).ToString());
+                Console.WriteLine(p2.Equals(p1));
+                Console.WriteLine((p1 + p2).ToString());
+                Console.WriteLine((p2 - p1).ToString());
+                Console.WriteLine(p1.Value);
 
-                bool quit = true;
+                bool quit = false;
 
                 if (quit)
                     return;
@@ -43,6 +45,9 @@ namespace ConsoleUI
                         MutationRate = mutationRate
                     });
 
+                // This weird structure is a result of the fact that a specific end state is sought.
+                evolution.TargetPoint = new Point(21, 34);
+
                 evolution.Run(dnaSize, DisplayPhenotype);
             }
             catch (Exception e)
@@ -57,9 +62,7 @@ namespace ConsoleUI
 
         private void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
-            Console.WriteLine("// TODO");
-            //Matrix matrix = new Matrix(dnaMaxValue, dnaMaxValue);
-            //matrix.Print(genotype, generation);
+            Console.WriteLine($"{generation,5:#####} {genotype.Fitness,6:0.0000}");
         }
     }
 }

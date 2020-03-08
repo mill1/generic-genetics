@@ -6,9 +6,24 @@ namespace GenericGenetics.Implementations
 {
     public class PathEvolution : Evolution<Point>, IEvolution<Point>
     {
+        public Point TargetPoint { get; set; }
+
         internal override double DetermineFitness(DNA<Point> genotype)
         {
-            return new PointsCalculator().Roundness(genotype.Genes);
+            Point currentPoint = new Point(25, 0); // TODO
+
+            int distance = (TargetPoint - currentPoint).Value;
+            int delta = distance;
+
+            foreach (Point point in genotype.Genes)
+            {
+                currentPoint += point;
+
+                if (currentPoint == TargetPoint)
+                    return 0;
+            }
+
+            return 1;
         }
 
         internal override Point GetRandomGene(Random random)

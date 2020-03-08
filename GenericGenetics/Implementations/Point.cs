@@ -14,7 +14,16 @@ namespace GenericGenetics.Implementations
             Y = y;
         }
 
+        public int Value
+        {
+            get
+            {
+                return X + Y;
+            }
+        }
+
         public static Point operator +(Point a, Point b) => new Point(a.X + b.X, a.Y + b.Y);
+        public static Point operator -(Point a, Point b) => new Point(a.X - b.X, a.Y - b.Y);
 
         public override bool Equals(object obj)
         {
