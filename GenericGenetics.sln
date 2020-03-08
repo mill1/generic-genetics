@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericGenetics", "GenericGenetics\GenericGenetics.csproj", "{D86E601C-593F-4523-8B20-7F600A754B72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericGenetics", "GenericGenetics\GenericGenetics.csproj", "{D86E601C-593F-4523-8B20-7F600A754B72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "Console\ConsoleUI.csproj", "{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormGraphics", "WinFormGraphics\WinFormGraphics.csproj", "{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D86E601C-593F-4523-8B20-7F600A754B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86E601C-593F-4523-8B20-7F600A754B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D86E601C-593F-4523-8B20-7F600A754B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C247DDAF-D9F4-4111-A1F1-49FEE12012B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B7A09F1-8316-47BA-9C57-04EACC68C6A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

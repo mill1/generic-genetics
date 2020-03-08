@@ -6,44 +6,47 @@ namespace GenericGenetics
     public abstract class Evolution<T>
     {
         Random random;
-        public abstract void GetInput();
 
-        public abstract void DisplayPhenotype(DNA<T> genotype, int generation);
-
-        public abstract double TargetFitness { get; }
-        public abstract int PopulationSize { get; }
-        public abstract int DnaSize { get; set; }
-        public abstract double MutationRate { get; }
+        private double targetFitness;
+        private int populationSize;
+        internal int DnaSize { get; private set; }
+        internal int DnaMinValue { get; set; }
+        internal int DnaMaxValue { get; set; }
+        private double mutationRate;
 
         // Delegates
-        public abstract T GetRandomGene(Random random);
-        public abstract double DetermineFitness(DNA<T> genotype);
+        internal abstract T GetRandomGene(Random random);
 
-        public void Run()
+        internal abstract double DetermineFitness(DNA<T> genotype);
+
+        public void SetParameters(Parameters parameters)
         {
-            int generation = 1;
-            DNA<T> genotype;
+            targetFitness = parameters.TargetFitness;
+            populationSize = parameters.PopulationSize;
+            DnaMinValue = parameters.DnaMinValue;
+            DnaMaxValue = parameters.DnaMaxValue;
+            mutationRate = parameters.MutationRate;
+        }
 
+        public void Run(int dnaSize, Action<DNA<T>, int> displayPhenotype) 
+        {
+            DnaSize = dnaSize;
+            DNA<T> genotype;
+            int generation = 1;
             random = new Random();
 
-            GetInput();
+            GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(populationSize, dnaSize, random, GetRandomGene, DetermineFitness, mutationRate);
 
-            GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(PopulationSize, DnaSize, random, GetRandomGene, DetermineFitness, MutationRate);
+            double bestFitness = targetFitness + 1;
 
-            double bestFitness = TargetFitness - 1;
-
-            while (bestFitness < TargetFitness)
+            while (bestFitness > targetFitness)
             {
                 ga.SpawnNewGeneration();
-                genotype = ga.NewPopulation.OrderByDescending(e => e.Fitness).First();
+                genotype = ga.NewPopulation.OrderBy(e => e.Fitness).First();
                 bestFitness = genotype.Fitness;
 
-                DisplayPhenotype(genotype, generation++);
+                displayPhenotype(genotype, generation++);
             }
-
-            //Worst DNA in population:
-            genotype = ga.NewPopulation.OrderByDescending(e => e.Fitness).Last();
-            DisplayPhenotype(genotype, --generation);
         }
     }
 }
