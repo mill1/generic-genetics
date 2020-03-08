@@ -14,9 +14,15 @@ namespace WinFormGraphics
         TextEvolution textEvolution;
         public TextEvolutionForm(IEvolution<char> evolution) : base(evolution)
         {
-            this.textEvolution = (TextEvolution)evolution;
+            textEvolution = (TextEvolution)evolution;
+            EnableRunButton(false);
 
             InitializeComponent();
+        }
+
+        private void txtTargetText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            EnableRunButton(txtTargetText.Text.Length >= 3);
         }
 
         internal override int GetDnaSize()

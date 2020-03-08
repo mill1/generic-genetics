@@ -36,5 +36,10 @@ namespace GenericGenetics
             int i = random.Next(DnaMinValue, validCharacters.Length);
             return validCharacters[i];
         }
+
+        internal int GetDnaSize()
+        {
+            return DnaSize;
+        }
     }
 }

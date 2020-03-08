@@ -9,7 +9,7 @@ namespace GenericGenetics
 
         private double targetFitness;
         private int populationSize;
-        public int DnaSize { get; set; }
+        internal int DnaSize { get; private set; }
         internal int DnaMinValue { get; set; }
         internal int DnaMaxValue { get; set; }
         private double mutationRate;

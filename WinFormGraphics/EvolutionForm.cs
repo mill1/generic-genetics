@@ -18,19 +18,24 @@ namespace WinFormGraphics
             InitializeComponent();
         }
 
-        //Perform any action on click action method
         private void cmdRun_Click(object sender, EventArgs e)
         {
             evolution.Run(GetDnaSize(), DisplayPhenotype);
+            cmdRun.Enabled = false;
         }
-
-        internal abstract int GetDnaSize();
-
-        internal abstract void DisplayPhenotype(DNA<T> genotype, int generation);
-
         public override void Refresh()
         {
             base.Refresh();
         }
+
+        internal void EnableRunButton(bool enabled)
+        {
+            cmdRun.Enabled = enabled;
+        }
+        internal abstract int GetDnaSize();
+
+        internal abstract void DisplayPhenotype(DNA<T> genotype, int generation);
+
+
     }
 }

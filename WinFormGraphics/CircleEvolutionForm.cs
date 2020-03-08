@@ -21,11 +21,6 @@ namespace WinFormGraphics
             InitializeComponent();
         }
 
-        internal override int GetDnaSize()
-        {
-            return evolution.DnaSize;
-        }
-
         internal override void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
             lblGenerationCount.Visible = true;
@@ -35,6 +30,11 @@ namespace WinFormGraphics
             fitness = genotype.Fitness;
 
             Refresh();
+        }
+
+        internal override int GetDnaSize()
+        {
+            return points.Count();
         }
 
         private int Adjust(int i, bool isY)

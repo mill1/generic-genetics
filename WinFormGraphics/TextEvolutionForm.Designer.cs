@@ -20,18 +20,19 @@
             this.txtTargetText = new System.Windows.Forms.TextBox();
             this.txtTargetText.Location = new System.Drawing.Point(90, 55);
             this.txtTargetText.Size = new System.Drawing.Size(300, 16);
+            this.txtTargetText.KeyPress += txtTargetText_KeyPress;
             this.Controls.Add(this.txtTargetText);
 
             this.lblResult = new System.Windows.Forms.Label();
             this.lblResult.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.lblResult.AutoSize = true;
-            this.lblResult.Location = new System.Drawing.Point(20, 110);
+            this.lblResult.Location = new System.Drawing.Point(20, 100);
             this.lblResult.Name = "lblResult";
             this.lblResult.Size = new System.Drawing.Size(100, 16);
             this.lblResult.TabIndex = 1;
             this.Controls.Add(this.lblResult);
 
-            this.ClientSize = new System.Drawing.Size(430, 230);
+            this.ClientSize = new System.Drawing.Size(430, 150);
             this.Text = "Generic genetics: generate a text";
         }
     }
