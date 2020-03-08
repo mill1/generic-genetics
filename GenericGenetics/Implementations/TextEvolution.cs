@@ -3,19 +3,18 @@ using System.Linq;
 
 namespace GenericGenetics
 {
-    public class TextEvolution : Evolution<char>
+    public class TextEvolution : Evolution<char>, IEvolution<char>
     {
         private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
 
-        public string TargetText { get; set; }
-
-        public TextEvolution(Parameters parameters) : base(parameters)
-        {
-        }
+        public string TargetText { get; set; } = "";
 
         internal override double DetermineFitness(DNA<char> genotype)
         {
             double score = 0;
+
+            if (TargetText.Length == 0)
+                return 1;
 
             genotype.Genes.Select((c, i) =>
             {
@@ -36,6 +35,11 @@ namespace GenericGenetics
         {
             int i = random.Next(DnaMinValue, validCharacters.Length);
             return validCharacters[i];
+        }
+
+        internal int GetDnaSize()
+        {
+            return DnaSize;
         }
     }
 }

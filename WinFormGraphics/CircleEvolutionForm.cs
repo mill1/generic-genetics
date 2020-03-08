@@ -5,70 +5,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using GenericGenetics;
-using GenericGenetics.Implementations;
-using Point = System.Drawing.Point;
+using Point = GenericGenetics.Implementations.Point;
 
 namespace WinFormGraphics
 {
-    public partial class CircleEvolutionForm : Form
+    public partial class CircleEvolutionForm: EvolutionForm<Point>
     {
-        private IEnumerable<Point> points = new List<Point>();
-        private int generation;
+        private IEnumerable<System.Drawing.Point> points = new List<System.Drawing.Point>();
+        IEvolution<Point> evolution;
         private double fitness;
 
-        public CircleEvolutionForm()
+        public CircleEvolutionForm(IEvolution<Point> evolution) : base(evolution)
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.evolution = evolution;
             InitializeComponent();
         }
 
-        //Perform any action on click action method
-        private void Button1_Click(object sender, EventArgs e)
+        internal override void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
-            CircleEvolution evolution = new CircleEvolution(
-                new Parameters()
-                {
-                    TargetFitness = 2.05f,
-                    PopulationSize = 100,
-                    DnaSize = 300,
-                    DnaMinValue = 0,
-                    DnaMaxValue = 50,
-                    MutationRate = 0.01
-                });
+            lblGenerationCount.Visible = true;
+            lblGenerationCount.Text = $"Generation {generation}, Fitness: {fitness.ToString("0.00000")}";
 
-            evolution.Run(DisplayPhenotype);
-        }
-
-        private void DisplayPhenotype(DNA<GenericGenetics.Implementations.Point> genotype, int generation)
-        {
-
-            points = genotype.Genes.Select(g => new Point(Adjust(g.X, false), Adjust(g.Y, true)));
-            this.generation = generation;
+            points = genotype.Genes.Select(g => new System.Drawing.Point(Adjust(g.X, false), Adjust(g.Y, true)));
             fitness = genotype.Fitness;
 
             Refresh();
         }
 
+        internal override int GetDnaSize()
+        {
+            return points.Count();
+        }
+
         private int Adjust(int i, bool isY)
         {
-            return i * 12 + ( isY ? 85 : 50);
+            return i * 12 + (isY ? 95 : 50);
         }
 
-        public override void Refresh()
+        protected override void OnPaint(PaintEventArgs e)
         {
-            base.Refresh();
-        }
-
-        protected override void OnPaint(PaintEventArgs e) 
-        {
-            label1.Text = $"Generation {generation}, Fitness: {fitness.ToString("0.00000")}";
-
             if (points.Count() == 0)
                 return;
 
             DrawEllipseRectangles(e);
         }
-
 
         private void DrawEllipseRectangles(PaintEventArgs e)
         {
@@ -78,13 +58,9 @@ namespace WinFormGraphics
             }
         }
 
-        private void DrawEllipseRectangle(PaintEventArgs e, Pen pen, Point point)
+        private void DrawEllipseRectangle(PaintEventArgs e, Pen pen, System.Drawing.Point point)
         {
-
-            // Create rectangle for ellipse.
             Rectangle rect = new Rectangle(point, new Size(4, 4));
-
-            // Draw ellipse to screen.
             e.Graphics.DrawEllipse(pen, rect);
         }
     }

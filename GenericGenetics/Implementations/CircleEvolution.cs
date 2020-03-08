@@ -4,12 +4,8 @@ using System.Linq;
 
 namespace GenericGenetics.Implementations
 {
-    public class CircleEvolution : Evolution<Point>
+    public class CircleEvolution : Evolution<Point>, IEvolution<Point>
     {
-        public CircleEvolution(Parameters parameters) : base(parameters)
-        {
-        }
-
         internal override double DetermineFitness(DNA<Point> genotype)
         {
             return new PointsCalculator().Roundness(genotype.Genes);

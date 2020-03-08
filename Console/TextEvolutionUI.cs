@@ -18,12 +18,13 @@ namespace ConsoleUI
                 Console.WriteLine("Population size:");
                 int populationSize = int.Parse(Console.ReadLine());
 
-                TextEvolution evolution = new TextEvolution(
+                TextEvolution evolution = new TextEvolution();
+
+                evolution.SetParameters(
                     new Parameters()
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaSize = targetText.Length,
                         DnaMinValue = 0,
                         DnaMaxValue = -1, // = nr of ValidCharacters
                         MutationRate = mutationRate
@@ -32,7 +33,7 @@ namespace ConsoleUI
                 // This weird structure is a result of the fact that a specific end state is sought.
                 evolution.TargetText = targetText;
 
-                evolution.Run(DisplayPhenotype);
+                evolution.Run(targetText.Length, DisplayPhenotype);
             }
             catch (Exception e)
             {
