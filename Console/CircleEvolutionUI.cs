@@ -30,13 +30,12 @@ namespace ConsoleUI
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaSize = dnaSize,
                         DnaMinValue = 0,
                         DnaMaxValue = dnaMaxValue,
                         MutationRate = mutationRate
                     });
 
-                evolution.Run(DisplayPhenotype);
+                evolution.Run(dnaSize, DisplayPhenotype);
             }
             catch (Exception e)
             {

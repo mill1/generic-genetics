@@ -12,11 +12,18 @@ namespace WinFormGraphics
     public partial class CircleEvolutionForm: EvolutionForm<Point>
     {
         private IEnumerable<System.Drawing.Point> points = new List<System.Drawing.Point>();
+        IEvolution<Point> evolution;
         private double fitness;
 
         public CircleEvolutionForm(IEvolution<Point> evolution) : base(evolution)
         {
-            InitializeComponentCircle();
+            this.evolution = evolution;
+            InitializeComponent();
+        }
+
+        internal override int GetDnaSize()
+        {
+            return evolution.DnaSize;
         }
 
         internal override void DisplayPhenotype(DNA<Point> genotype, int generation)

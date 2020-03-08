@@ -7,11 +7,14 @@ namespace GenericGenetics
     {
         private readonly string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.|!#$%&/()=? ";
 
-        public string TargetText { get; set; }
+        public string TargetText { get; set; } = "";
 
         internal override double DetermineFitness(DNA<char> genotype)
         {
             double score = 0;
+
+            if (TargetText.Length == 0)
+                return 1;
 
             genotype.Genes.Select((c, i) =>
             {

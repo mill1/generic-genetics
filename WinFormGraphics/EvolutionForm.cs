@@ -21,8 +21,10 @@ namespace WinFormGraphics
         //Perform any action on click action method
         private void cmdRun_Click(object sender, EventArgs e)
         {
-            evolution.Run(DisplayPhenotype);
+            evolution.Run(GetDnaSize(), DisplayPhenotype);
         }
+
+        internal abstract int GetDnaSize();
 
         internal abstract void DisplayPhenotype(DNA<T> genotype, int generation);
 

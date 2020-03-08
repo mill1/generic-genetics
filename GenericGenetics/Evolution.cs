@@ -9,7 +9,7 @@ namespace GenericGenetics
 
         private double targetFitness;
         private int populationSize;
-        private int dnaSize;
+        public int DnaSize { get; set; }
         internal int DnaMinValue { get; set; }
         internal int DnaMaxValue { get; set; }
         private double mutationRate;
@@ -23,17 +23,16 @@ namespace GenericGenetics
         {
             targetFitness = parameters.TargetFitness;
             populationSize = parameters.PopulationSize;
-            dnaSize = parameters.DnaSize;
             DnaMinValue = parameters.DnaMinValue;
             DnaMaxValue = parameters.DnaMaxValue;
             mutationRate = parameters.MutationRate;
         }
 
-        public void Run(Action<DNA<T>, int> displayPhenotype)
+        public void Run(int dnaSize, Action<DNA<T>, int> displayPhenotype) 
         {
+            DnaSize = dnaSize;
             DNA<T> genotype;
             int generation = 1;
-
             random = new Random();
 
             GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(populationSize, dnaSize, random, GetRandomGene, DetermineFitness, mutationRate);

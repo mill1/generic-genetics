@@ -25,7 +25,6 @@ namespace ConsoleUI
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaSize = targetText.Length,
                         DnaMinValue = 0,
                         DnaMaxValue = -1, // = nr of ValidCharacters
                         MutationRate = mutationRate
@@ -34,7 +33,7 @@ namespace ConsoleUI
                 // This weird structure is a result of the fact that a specific end state is sought.
                 evolution.TargetText = targetText;
 
-                evolution.Run(DisplayPhenotype);
+                evolution.Run(targetText.Length, DisplayPhenotype);
             }
             catch (Exception e)
             {

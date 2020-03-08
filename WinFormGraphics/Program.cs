@@ -13,24 +13,49 @@ namespace WinFormGraphics
         [STAThread]
         static void Main()
         {
+            int i = 1;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new OrigForm.MainOrigForm());
 
-            IEvolution<Point> evolution = new CircleEvolution();
+            if (i == 0)
+                Application.Run(new OrigForm.MainOrigForm());
 
-            evolution.SetParameters(
-                new Parameters()
-                {
-                    TargetFitness = 2.05f,
-                    PopulationSize = 100,
-                    DnaSize = 300,
-                    DnaMinValue = 0,
-                    DnaMaxValue = 50,
-                    MutationRate = 0.01
-                });
+            if (i == 1)
+            {
+                // TEXT
+                TextEvolution evolution = new TextEvolution();
 
-            Application.Run(new CircleEvolutionForm(evolution));
+                evolution.SetParameters(
+                    new Parameters()
+                    {
+                        TargetFitness = 0.00,
+                        PopulationSize = 100,
+                        DnaMinValue = 0,
+                        DnaMaxValue = -1, // = nr of ValidCharacters
+                        MutationRate = 0.02
+                    });
+
+                Application.Run(new TextEvolutionForm(evolution));
+            }
+
+            if (i == 2)
+            {
+                //CIRCLE
+                CircleEvolution evolution = new CircleEvolution();
+
+                evolution.SetParameters(
+                    new Parameters()
+                    {
+                        TargetFitness = 2.05f,
+                        PopulationSize = 100,
+                        DnaMinValue = 0,
+                        DnaMaxValue = 50,
+                        MutationRate = 0.01
+                    });
+
+                Application.Run(new CircleEvolutionForm(evolution));
+            }
         }
     }
 }
