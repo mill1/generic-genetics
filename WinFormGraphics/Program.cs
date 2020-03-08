@@ -13,7 +13,7 @@ namespace WinFormGraphics
         [STAThread]
         static void Main()
         {
-            int i = 1;
+            int i = 2;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -2,13 +2,10 @@
 {
     partial class TextEvolutionForm
     {
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private System.Windows.Forms.Label lblTargetText;
         private System.Windows.Forms.TextBox txtTargetText;
         private System.Windows.Forms.Label lblResult;
+
         private void InitializeComponent()
         {
             this.lblTargetText = new System.Windows.Forms.Label();

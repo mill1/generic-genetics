@@ -35,6 +35,7 @@
             this.cmdRun.Name = "cmdRun";
             this.cmdRun.Size = new System.Drawing.Size(46, 22);
             this.cmdRun.Text = "Run!";
+            this.cmdRun.TabIndex = 0;
             //Raises the click event of the button
             this.cmdRun.Click += cmdRun_Click;
             this.Controls.Add(this.cmdRun);
@@ -44,8 +45,8 @@
             this.lblGenerationCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGenerationCount.Location = new System.Drawing.Point(80, 23);
             this.lblGenerationCount.Name = "lblGenerationCount";
-            this.lblGenerationCount.Size = new System.Drawing.Size(500, 23);
-            this.lblGenerationCount.TabIndex = 0;
+            this.lblGenerationCount.Size = new System.Drawing.Size(100, 23);
+            this.lblGenerationCount.AutoSize = true;
             this.lblGenerationCount.Text = "Generation..";
             this.lblGenerationCount.Visible = false;
             this.Controls.Add(this.lblGenerationCount);

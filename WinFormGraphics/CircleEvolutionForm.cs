@@ -20,6 +20,10 @@ namespace WinFormGraphics
             this.evolution = evolution;
             InitializeComponent();
         }
+        private void txtDnaSize_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
 
         internal override void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
@@ -34,7 +38,7 @@ namespace WinFormGraphics
 
         internal override int GetDnaSize()
         {
-            return points.Count();
+            return int.Parse(txtDnaSize.Text);
         }
 
         private int Adjust(int i, bool isY)

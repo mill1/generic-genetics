@@ -336,26 +336,15 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-# BeatPulse healthcheck temp database
-healthchecksdb
-/Earless.Web/ClientApp/dist/vendor-es5.js.map
-/Earless.Web/ClientApp/dist/vendor-es5.js
-/Earless.Web/ClientApp/dist/vendor-es2015.js.map
-/Earless.Web/ClientApp/dist/vendor-es2015.js
-/Earless.Web/ClientApp/dist/styles.css.map
-/Earless.Web/ClientApp/dist/styles.css
-/Earless.Web/ClientApp/dist/runtime-es5.js.map
-/Earless.Web/ClientApp/dist/runtime-es5.js
-/Earless.Web/ClientApp/dist/runtime-es2015.js.map
-/Earless.Web/ClientApp/dist/runtime-es2015.js
-/Earless.Web/ClientApp/dist/polyfills-es5.js.map
-/Earless.Web/ClientApp/dist/polyfills-es5.js
-/Earless.Web/ClientApp/dist/polyfills-es2015.js.map
-/Earless.Web/ClientApp/dist/polyfills-es2015.js
-/Earless.Web/ClientApp/dist/main-es5.js.map
-/Earless.Web/ClientApp/dist/main-es5.js
-/Earless.Web/ClientApp/dist/main-es2015.js.map
-/Earless.Web/ClientApp/dist/main-es2015.js
-/Earless.Web/ClientApp/dist/index.html
-/Earless.Web/ClientApp/dist
-/Earless.WebApi/Migrations/20200117123025_InitialCreate.Designer.cs
+/.vs/GenericGenetics/v16/TestStore/0
+/Console/bin/Debug/netcoreapp3.0
+/.vs/GenericGenetics/v16
+/Console/obj/Debug/netcoreapp2.1
+/Console/obj/Debug/netcoreapp3.0
+/Console/obj/Debug/netcoreapp3.1
+/Console/obj/Release/netcoreapp3.0
+/Console/obj
+/WinFormGraphics/bin/Debug/netcoreapp3.0
+/WinFormGraphics/obj/Debug/netcoreapp3.0
+/WinFormGraphics/obj
+*.user
