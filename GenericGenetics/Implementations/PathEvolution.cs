@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GenericGenetics.Implementations
 {
-    public class CircleEvolution : Evolution<Point>, IEvolution<Point>
+    public class PathEvolution : Evolution<Point>, IEvolution<Point>
     {
         internal override double DetermineFitness(DNA<Point> genotype)
         {

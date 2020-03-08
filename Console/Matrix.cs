@@ -35,9 +35,6 @@ namespace ConsoleUI
             sys.Console.WriteLine(ruler.Substring(0, sys.Math.Min(ruler.Length, Width * 2)));
             sys.Console.WriteLine();
 
-            //Point center = new PointsCalculator().Center(genotype.Genes);
-            // chars[center.X, center.Y] = 'O';
-
             for (int i = 0; i < Heigth; i++)
             {
                 sys.Console.ForegroundColor = sys.ConsoleColor.Yellow;
@@ -47,10 +44,10 @@ namespace ConsoleUI
             }
         }
 
-        internal void Print<Point>(DNA<Point> genotype, int generation)
-        {
-            throw new NotImplementedException();
-        }
+        //internal void Print<Point>(DNA<Point> genotype, int generation)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         private T[] GetRow<T>(T[,] matrix, int row)
         {
