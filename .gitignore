@@ -20,3 +20,15 @@
 /.vs/GenericGenetics/v16/Server/sqlite3/storage.ide-wal
 
 
+/.vs/GenericGenetics/v16/TestStore/0
+/Console/bin/Debug/netcoreapp3.0
+/.vs/GenericGenetics/v16
+/Console/obj/Debug/netcoreapp2.1
+/Console/obj/Debug/netcoreapp3.0
+/Console/obj/Debug/netcoreapp3.1
+/Console/obj/Release/netcoreapp3.0
+/Console/obj
+/WinFormGraphics/bin/Debug/netcoreapp3.0
+/WinFormGraphics/obj/Debug/netcoreapp3.0
+/WinFormGraphics/obj
+*.user
