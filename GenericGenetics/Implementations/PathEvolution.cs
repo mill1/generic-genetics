@@ -12,18 +12,20 @@ namespace GenericGenetics.Implementations
         {
             Point currentPoint = new Point(25, 0); // TODO
 
-            int distance = (TargetPoint - currentPoint).Value;
-            int delta = distance;
+            int minDistance = (TargetPoint - currentPoint).Value;
+            int delta = minDistance;
 
             foreach (Point point in genotype.Genes)
             {
                 currentPoint += point;
 
-                if (currentPoint == TargetPoint)
-                    return 0;
+                delta = (TargetPoint - currentPoint).Value;
+
+                if (delta < minDistance)
+                    minDistance = delta;
             }
 
-            return 1;
+            return minDistance;
         }
 
         internal override Point GetRandomGene(Random random)

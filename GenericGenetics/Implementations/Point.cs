@@ -18,7 +18,7 @@ namespace GenericGenetics.Implementations
         {
             get
             {
-                return X + Y;
+                return Math.Abs(X) + Math.Abs(Y);
             }
         }
 

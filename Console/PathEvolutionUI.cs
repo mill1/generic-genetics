@@ -15,12 +15,12 @@ namespace ConsoleUI
             try
             {
                 Point p1 = new Point(1, 2);
-                Point p2 = new Point(3, 4);
+                Point p2 = new Point(-2, -2);
 
-                Console.WriteLine(p2.Equals(p1));
-                Console.WriteLine((p1 + p2).ToString());
-                Console.WriteLine((p2 - p1).ToString());
-                Console.WriteLine(p1.Value);
+                //Console.WriteLine(p2.Equals(p1));
+                //Console.WriteLine((p1 + p2).ToString());
+                Console.WriteLine((p1 - p2).Value);
+                //Console.WriteLine(p1.Value);
 
                 bool quit = false;
 
