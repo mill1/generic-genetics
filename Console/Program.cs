@@ -10,7 +10,7 @@ namespace ConsoleUI
         {
             //new TextEvolutionUI().Run(0.01f, 0.01f);
             //new CircleEvolutionUI().Run(1.95f, 0.02f);
-            new PathEvolutionUI().Run(0.1f, 0.01);
+            new PathEvolutionUI().Run(0.00046f, 0.02f);
         }
     }
 }

@@ -2,26 +2,21 @@
 using GenericGenetics.Implementations;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleUI
 {
     public class PathEvolutionUI
     {
+        double targetFitness;
 
         public void Run(double targetFitness, double mutationRate)
         {
+            this.targetFitness = targetFitness;
+
             try
             {
-                Point p1 = new Point(1, 2);
-                Point p2 = new Point(-2, -2);
-
-                //Console.WriteLine(p2.Equals(p1));
-                //Console.WriteLine((p1 + p2).ToString());
-                Console.WriteLine((p1 - p2).Value);
-                //Console.WriteLine(p1.Value);
-
                 bool quit = false;
 
                 if (quit)
@@ -30,8 +25,8 @@ namespace ConsoleUI
                 Console.WriteLine("Population size:");
                 int populationSize = int.Parse(Console.ReadLine());
 
-                Console.WriteLine($"Number of vectors:");
-                int dnaSize = 100; // int.Parse(Console.ReadLine());
+                //Number of vectors:
+                int dnaSize = 127; 
 
                 PathEvolution evolution = new PathEvolution();
 
@@ -40,8 +35,8 @@ namespace ConsoleUI
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaMinValue = -10,
-                        DnaMaxValue = 10,
+                        DnaMinValue = -9,
+                        DnaMaxValue = 9,
                         MutationRate = mutationRate
                     });
 
@@ -62,7 +57,23 @@ namespace ConsoleUI
 
         private void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
-            Console.WriteLine($"{generation,5:#####} {genotype.Fitness,6:0.0000}");
+            int minGap = genotype.Genes.Min(p => p.Value);
+
+            Console.WriteLine($"{generation,5:#####}  {genotype.Fitness,7:0.00000}  (min. gap: {minGap})");
+
+            if (genotype.Fitness <= targetFitness)
+            { 
+                Console.WriteLine($"Path:");
+
+                for (int i = 0; i < genotype.Genes.Length; i++)
+                {
+                    Point p = genotype.Genes[i];
+                    Console.WriteLine($"Step {i,5:####0}\t{p}");
+
+                    if (p.Value == minGap)
+                        break;
+                }
+            }
         }
     }
 }

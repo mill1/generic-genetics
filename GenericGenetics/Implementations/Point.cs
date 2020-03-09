@@ -75,7 +75,7 @@ namespace GenericGenetics.Implementations
 
         public override string ToString()
         {
-            return $"X: {X} Y: {Y}";
+            return $"X: {X, 3:##0}  Y: {Y,3:##0}  Value: {Value,4:###0}";
         }
     }
 }
