@@ -6,10 +6,10 @@ namespace GenericGenetics
 {
     public class GeneticAlgorithm<T>
     {
-        public List<DNA<T>> NewPopulation { get; private set; }
         public double MutationRate { get; private set; }
 
-        private List<DNA<T>> population;
+        public List<DNA<T>> population;
+        public List<DNA<T>> newPopulation;
         private readonly Random random;
 
         public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<Random, T> getRandomGene,
@@ -17,7 +17,7 @@ namespace GenericGenetics
         {
             MutationRate = mutationRate;
             population = new List<DNA<T>>(populationSize);
-            NewPopulation = new List<DNA<T>>(populationSize);
+            newPopulation = new List<DNA<T>>(populationSize);
             this.random = random;
 
             population = Enumerable.Range(0, populationSize).Select(
@@ -28,17 +28,17 @@ namespace GenericGenetics
         {
             population.ForEach(e => e.CalculateFitness(e));
 
-            NewPopulation.Clear();
-
             double maximumMaleFitness = GetMaximumFitness(isMale: true);
             double maximumFemaleFitness = GetMaximumFitness(isMale: false);
 
-            population.ForEach(e => NewPopulation.Add(GetChild(maximumMaleFitness, maximumFemaleFitness)));
+            newPopulation.Clear();
+
+            population.ForEach(e => newPopulation.Add(GetChild(maximumMaleFitness, maximumFemaleFitness)));
 
             // Save memory; switch between lists
             List<DNA<T>> tmpList = population;
-            population = NewPopulation;
-            NewPopulation = tmpList;
+            population = newPopulation;
+            newPopulation = tmpList;
         }
 
         private double GetMaximumFitness(bool isMale)

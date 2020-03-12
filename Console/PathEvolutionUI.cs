@@ -57,9 +57,9 @@ namespace ConsoleUI
 
         private void DisplayPhenotype(DNA<Point> genotype, int generation)
         {
-            int minGap = genotype.Genes.Min(p => p.Value);
+            int minDistanceToTarget = genotype.Genes.Min(p => p.DistanceToTarget);
 
-            Console.WriteLine($"{generation,5:#####}  {genotype.Fitness,7:0.00000}  (min. gap: {minGap})");
+            Console.WriteLine($"{generation,5:#####}  {genotype.Fitness,5:0.000}  (min. gap: {minDistanceToTarget})");
 
             if (genotype.Fitness <= targetFitness)
             { 
@@ -68,9 +68,9 @@ namespace ConsoleUI
                 for (int i = 0; i < genotype.Genes.Length; i++)
                 {
                     Point p = genotype.Genes[i];
-                    Console.WriteLine($"Step {i,5:####0}\t{p}");
+                    Console.WriteLine($"Step {i+1,3:##0}\t{p} gap: {p.DistanceToTarget,3:##0}");
 
-                    if (p.Value == minGap)
+                    if (p.DistanceToTarget == minDistanceToTarget)
                         break;
                 }
             }

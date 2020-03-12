@@ -12,27 +12,25 @@ namespace GenericGenetics.Implementations
         {
             Point currentPoint = new Point(25, 0); // TODO
 
-            int minGap = (TargetPoint - currentPoint).Value;
-            int gap;
-            int step = 0;
-            int minStep = step;
+            int minDistanceToTarget = (TargetPoint - (currentPoint + genotype.Genes[0])).Value + 1;
+            int totalDistance = 0;
+            int minTotalDistance = 0;
 
             foreach (Point point in genotype.Genes)
             {
-                step++;
+                totalDistance += point.Value;
+
                 currentPoint += point;
+                point.DistanceToTarget = (TargetPoint - currentPoint).Value;
 
-                gap = (TargetPoint - currentPoint).Value;
-
-                if (gap < minGap)
+                if (point.DistanceToTarget < minDistanceToTarget)
                 {
-                    minGap = gap;
-                    minStep = step;
+                    minDistanceToTarget = point.DistanceToTarget;
+                    minTotalDistance = totalDistance;
                 }
             }
-            double fitness = (double)((minGap * 10) + minStep) / genotype.Genes.Length;
 
-            Console.WriteLine($"{minGap} {minStep}");
+            double fitness = minDistanceToTarget + (minTotalDistance / 1000d);
 
             return fitness;
         }

@@ -42,9 +42,8 @@ namespace GenericGenetics
             while (bestFitness > targetFitness)
             {
                 ga.SpawnNewGeneration();
-                genotype = ga.NewPopulation.OrderBy(e => e.Fitness).First();
+                genotype = ga.newPopulation.OrderBy(e => e.Fitness).First();
                 bestFitness = genotype.Fitness;
-
                 displayPhenotype(genotype, generation++);
             }
         }

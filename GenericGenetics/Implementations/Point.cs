@@ -7,6 +7,7 @@ namespace GenericGenetics.Implementations
         public int X { get; set; }
         public int Y { get; set; }
         public double DistanceToCenter { get; set; }
+        public int DistanceToTarget { get; set; }
 
         public Point(int x, int y)
         {
@@ -75,7 +76,7 @@ namespace GenericGenetics.Implementations
 
         public override string ToString()
         {
-            return $"X: {X, 3:##0}  Y: {Y,3:##0}  Value: {Value,4:###0}";
+            return $"X: {X, 3:##0}  Y: {Y,3:##0}";
         }
     }
 }
