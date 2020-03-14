@@ -7,7 +7,6 @@ namespace GenericGenetics.Implementations
         public int X { get; set; }
         public int Y { get; set; }
         public double DistanceToCenter { get; set; }
-        public int DistanceToTarget { get; set; }
 
         public Point(int x, int y)
         {

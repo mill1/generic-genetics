@@ -7,32 +7,42 @@ namespace GenericGenetics.Implementations
     public class PathEvolution : Evolution<Point>, IEvolution<Point>
     {
         public Point TargetPoint { get; set; }
+        public Point StartingPoint { get; set; }
 
         internal override double DetermineFitness(DNA<Point> genotype)
         {
-            Point currentPoint = new Point(25, 0); // TODO
+            int minDistanceToTarget;
+            int minTotalDistance;
+            int length;
 
-            int minDistanceToTarget = (TargetPoint - (currentPoint + genotype.Genes[0])).Value + 1;
-            int totalDistance = 0;
-            int minTotalDistance = 0;
-
-            foreach (Point point in genotype.Genes)
-            {
-                totalDistance += point.Value;
-
-                currentPoint += point;
-                point.DistanceToTarget = (TargetPoint - currentPoint).Value;
-
-                if (point.DistanceToTarget < minDistanceToTarget)
-                {
-                    minDistanceToTarget = point.DistanceToTarget;
-                    minTotalDistance = totalDistance;
-                }
-            }
+            EvaluatePath(genotype, out minDistanceToTarget, out minTotalDistance, out length);
 
             double fitness = minDistanceToTarget + (minTotalDistance / 1000d);
 
             return fitness;
+        }
+
+        public void EvaluatePath(DNA<Point> genotype, out int minDistanceToTarget, out int minTotalDistance, out int length)
+        {
+            Point currentPoint = StartingPoint;
+
+            minDistanceToTarget = (TargetPoint - (currentPoint + genotype.Genes[0])).Value + 1;
+            minTotalDistance = 0;
+            length = 0;
+            int totalDistance = 0;
+
+            for (int i = 0; i < genotype.Genes.Length; i++)
+            {
+                totalDistance += genotype.Genes[i].Value;
+                currentPoint += genotype.Genes[i];
+
+                if ((TargetPoint - currentPoint).Value < minDistanceToTarget)
+                {
+                    minDistanceToTarget = (TargetPoint - currentPoint).Value;
+                    minTotalDistance = totalDistance;
+                    length = i + 1;
+                }
+            }
         }
 
         internal override Point GetRandomGene(Random random)
