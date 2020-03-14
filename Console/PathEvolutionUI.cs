@@ -27,7 +27,7 @@ namespace ConsoleUI
                 int populationSize = int.Parse(Console.ReadLine());
 
                 //Number of vectors:
-                int dnaSize = 127; 
+                int dnaSize = 40; 
 
                 evolution.SetParameters(
                     new Parameters()
@@ -63,15 +63,13 @@ namespace ConsoleUI
 
             if (genotype.Fitness <= targetFitness)
             { 
-                //Point[] path = GetPath(genotype);
-
                 int minDistanceToTarget;
                 int minTotalDistance;
                 int length;
 
                 evolution.EvaluatePath(genotype, out minDistanceToTarget, out minTotalDistance, out length);
 
-                Console.WriteLine($"Gap: {minDistanceToTarget,2:#0} length: {length,2:#0} distance: {minTotalDistance}");
+                Console.WriteLine($"Gap: {minDistanceToTarget,2:#0} length: {length,2:#0} distance: {minTotalDistance,3:##0}");
 
                 Point[] path = new Point[length];
                 Array.Copy(genotype.Genes, path, length);
@@ -80,6 +78,10 @@ namespace ConsoleUI
                 {
                     Console.WriteLine($"Step {i+1,3:##0}\t{genotype.Genes[i]}");
                 }
+
+                Matrix matrix = new Matrix(40, 40);
+                matrix.Print(path, generation);
+
             }
         }
     }

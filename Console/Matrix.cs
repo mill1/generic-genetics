@@ -17,37 +17,47 @@ namespace ConsoleUI
             Width = width;
         }
 
+        public void Print(Point[] points, int generation)
+        {
+            PrintHeader(generation, points.Length);
+        }
+
         public void Print(DNA<Point> genotype, int generation)
         {
             int geneCount = genotype.Genes.Length;
 
-            sys.Console.ForegroundColor = sys.ConsoleColor.Green;
-            sys.Console.WriteLine("\r\n\r\n    Generation: {0,4:####} Gene count: {1} score: {2}\r\n", generation, geneCount, genotype.Fitness);
+            PrintHeader(generation, geneCount, genotype.Fitness);
 
             char[,] chars = new char[geneCount, geneCount * 2];
 
             genotype.Genes.ToList().ForEach(p => chars[(int)p.Y, (int)p.X * 2] = '\u25A0');
 
-            string ruler = "0 _ _ _ _ _ _ _ 9 1 _ _ _ _ _ _ _ _ 9 2 _ _ _ _ _ _ _ _ 9 3 _ _ _ _ _ _ _ _ 9 5 _ _ _ _ _ _ _ _ 9 40";
-
-            sys.Console.ForegroundColor = sys.ConsoleColor.Yellow;
-            sys.Console.Write("    ");
-            sys.Console.WriteLine(ruler.Substring(0, sys.Math.Min(ruler.Length, Width * 2)));
-            sys.Console.WriteLine();
-
             for (int i = 0; i < Heigth; i++)
             {
-                sys.Console.ForegroundColor = sys.ConsoleColor.Yellow;
-                sys.Console.Write((i+1).ToString("d3") + " ");
-                sys.Console.ForegroundColor = sys.ConsoleColor.White;
-                sys.Console.WriteLine(GetRow(chars, i));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write((i+1).ToString("d3") + " ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(GetRow(chars, i));
             }
         }
 
-        //internal void Print<Point>(DNA<Point> genotype, int generation)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void PrintHeader(int generation, int geneCount, double fitness = -1)
+        {
+            string ruler = "0 _ _ _ _ _ _ _ 9 1 _ _ _ _ _ _ _ _ 9 2 _ _ _ _ _ _ _ _ 9 3 _ _ _ _ _ _ _ _ 9 5 _ _ _ _ _ _ _ _ 9 40";
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.Write("\r\n\r\n    Generation: {0,4:####} Gene count: {1}", generation, geneCount);
+            if (fitness == -1)
+                Console.WriteLine();
+            else
+                Console.WriteLine($" fitness: {fitness}");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("    ");
+            Console.WriteLine(ruler.Substring(0, Math.Min(ruler.Length, Width * 2)));
+            Console.WriteLine();
+        }
 
         private T[] GetRow<T>(T[,] matrix, int row)
         {
