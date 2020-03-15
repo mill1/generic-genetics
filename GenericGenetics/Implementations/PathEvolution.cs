@@ -38,10 +38,10 @@ namespace GenericGenetics.Implementations
                     minDistanceToTarget = (TargetPoint - currentPoint).Value;
                     minTotalDistance = totalDistance;
 
-                    //if (currentPoint.Y > 5 && currentPoint.Y < 8 && currentPoint.X < 40)
-                    //    obstacle = true;
+                    if (currentPoint.Y > 5 && currentPoint.X < 45)
+                        obstacle = true;
 
-                    //if (currentPoint.X > 5 && currentPoint.X < 8 && currentPoint.Y < 30)
+                    //if (currentPoint.X > 5 && currentPoint.X < 18 && currentPoint.Y < 31)
                     //    obstacle = true;
 
                     length = i + 1;

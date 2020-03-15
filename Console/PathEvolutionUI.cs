@@ -25,9 +25,7 @@ namespace ConsoleUI
                 evolution.TargetPoint = new Point(50, 30);
 
                 //Number of vectors (=points). Based on DnaMinValue/DnaMaxValue = (-)2:
-                //int dnaSize = (int)((evolution.TargetPoint - evolution.StartingPoint).Value * 1.2f); 
-                // two obstacles:
-                int dnaSize = 150;
+                int dnaSize = (int)((evolution.TargetPoint - evolution.StartingPoint).Value * 1.2f); 
 
                 evolution.SetParameters(
                     new Parameters()
