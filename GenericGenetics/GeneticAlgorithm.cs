@@ -6,39 +6,42 @@ namespace GenericGenetics
 {
     public class GeneticAlgorithm<T>
     {
-        public List<DNA<T>> NewPopulation { get; private set; }
         public double MutationRate { get; private set; }
 
-        private List<DNA<T>> population;
+        public List<DNA<T>> Population { get; private set; }
+        private List<DNA<T>> newPopulation;
         private readonly Random random;
 
         public GeneticAlgorithm(int populationSize, int dnaSize, Random random, Func<Random, T> getRandomGene,
                                 Func<DNA<T>, double> determineFitness, double mutationRate)
         {
             MutationRate = mutationRate;
-            population = new List<DNA<T>>(populationSize);
-            NewPopulation = new List<DNA<T>>(populationSize);
+            Population = new List<DNA<T>>(populationSize);
+            newPopulation = new List<DNA<T>>(populationSize);
             this.random = random;
 
-            population = Enumerable.Range(0, populationSize).Select(
+            Population = Enumerable.Range(0, populationSize).Select(
                 e => new DNA<T>(dnaSize, random, getRandomGene, determineFitness, InitializeGenes: true)).ToList();
+        }
+
+        public void DeterminePopulationFitness()
+        {
+            Population.ForEach(e => e.DetermineFitness());
         }
 
         public void SpawnNewGeneration()
         {
-            population.ForEach(e => e.CalculateFitness(e));
-
-            NewPopulation.Clear();
-
             double maximumMaleFitness = GetMaximumFitness(isMale: true);
             double maximumFemaleFitness = GetMaximumFitness(isMale: false);
 
-            population.ForEach(e => NewPopulation.Add(GetChild(maximumMaleFitness, maximumFemaleFitness)));
+            newPopulation.Clear();
+
+            Population.ForEach(e => newPopulation.Add(GetChild(maximumMaleFitness, maximumFemaleFitness)));
 
             // Save memory; switch between lists
-            List<DNA<T>> tmpList = population;
-            population = NewPopulation;
-            NewPopulation = tmpList;
+            List<DNA<T>> tmpList = Population;
+            Population = newPopulation;
+            newPopulation = tmpList;
         }
 
         private double GetMaximumFitness(bool isMale)
@@ -47,10 +50,10 @@ namespace GenericGenetics
             double partnerFitnessPercentile = 0.70f;
 
             // the number of members of the population beloning to the percentile. 
-            int elite = (int)(population.Count * (1 - partnerFitnessPercentile));
+            int elite = (int)(Population.Count * (1 - partnerFitnessPercentile));
 
 
-            return population.OrderBy(e => e.Fitness)
+            return Population.OrderBy(e => e.Fitness)
                            .Where(e => e.IsMale == isMale)
                            .Select(e => e.Fitness).Take(elite).First();
         }
@@ -70,11 +73,11 @@ namespace GenericGenetics
         {
             while (true)
             {
-                int i = (int)(random.NextDouble() * population.Count);
+                int i = (int)(random.NextDouble() * Population.Count);
 
-                if (population[i].IsMale != isMale)
-                    if (population[i].Fitness <= maximumParentFitness)
-                        return population[i];
+                if (Population[i].IsMale != isMale)
+                    if (Population[i].Fitness <= maximumParentFitness)
+                        return Population[i];
             }
         }
     }

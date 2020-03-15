@@ -37,15 +37,19 @@ namespace GenericGenetics
 
             GeneticAlgorithm<T> ga = new GeneticAlgorithm<T>(populationSize, dnaSize, random, GetRandomGene, DetermineFitness, mutationRate);
 
-            double bestFitness = targetFitness + 1;
+            double bestFitness;
 
-            while (bestFitness > targetFitness)
+            while (true)
             {
-                ga.SpawnNewGeneration();
-                genotype = ga.NewPopulation.OrderBy(e => e.Fitness).First();
+                ga.DeterminePopulationFitness();  
+                genotype = ga.Population.OrderBy(e => e.Fitness).First();
                 bestFitness = genotype.Fitness;
-
                 displayPhenotype(genotype, generation++);
+
+                if (bestFitness < targetFitness)
+                    break;
+                
+                ga.SpawnNewGeneration();
             }
         }
     }

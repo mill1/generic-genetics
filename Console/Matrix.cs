@@ -10,46 +10,79 @@ namespace ConsoleUI
     public class Matrix
     {
         public int Width { get; private set; }
-        public int Heigth { get; private set; }
+        public int Height { get; private set; }
+
+        public Matrix()
+        {
+        }
+
         public Matrix(int width, int heigth)
         {
-            Heigth = heigth;
+            Height = heigth;
             Width = width;
+        }
+
+        public void PrintPath(Point[] points, int generation, double fitness, Point startingPoint)
+        {
+            Point[] path = new Point[points.Length+1];
+            path[0] = startingPoint;
+            Point currentPoint = startingPoint;
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                currentPoint += points[i];
+                path[i + 1] = new Point(currentPoint.X, currentPoint.Y);
+            }
+
+            int minWidth = path.Min(p => p.X);
+            int minHeight = path.Min(p => p.Y);
+
+            Width = path.Max(p => p.X) - minWidth + 1;
+            Height = path.Max(p => p.Y) - minHeight + 1;
+            
+            PrintHeader(generation, points.Length, fitness);
+            PrintPoints(path, Height, Width, minHeight, minWidth, true);
         }
 
         public void Print(DNA<Point> genotype, int generation)
         {
             int geneCount = genotype.Genes.Length;
 
-            sys.Console.ForegroundColor = sys.ConsoleColor.Green;
-            sys.Console.WriteLine("\r\n\r\n    Generation: {0,4:####} Gene count: {1} score: {2}\r\n", generation, geneCount, genotype.Fitness);
+            PrintHeader(generation, geneCount, genotype.Fitness);
+            PrintPoints(genotype.Genes, geneCount, geneCount);
+        }
 
-            char[,] chars = new char[geneCount, geneCount * 2];
+        private void PrintPoints(Point[] points, int height, int width, int minHeight = 0, int minWidth = 0, bool path = false)
+        {
+            char[,] chars = new char[height, width * 2];
 
-            genotype.Genes.ToList().ForEach(p => chars[(int)p.Y, (int)p.X * 2] = '\u25A0');
+            points.ToList().ForEach(p => chars[p.Y-minHeight, (p.X-minWidth) * 2] = '\u25A0');
 
-            string ruler = "0 _ _ _ _ _ _ _ 9 1 _ _ _ _ _ _ _ _ 9 2 _ _ _ _ _ _ _ _ 9 3 _ _ _ _ _ _ _ _ 9 5 _ _ _ _ _ _ _ _ 9 40";
-
-            sys.Console.ForegroundColor = sys.ConsoleColor.Yellow;
-            sys.Console.Write("    ");
-            sys.Console.WriteLine(ruler.Substring(0, sys.Math.Min(ruler.Length, Width * 2)));
-            sys.Console.WriteLine();
-
-            //Point center = new PointsCalculator().Center(genotype.Genes);
-            // chars[center.X, center.Y] = 'O';
-
-            for (int i = 0; i < Heigth; i++)
+            if (path)
             {
-                sys.Console.ForegroundColor = sys.ConsoleColor.Yellow;
-                sys.Console.Write((i+1).ToString("d3") + " ");
-                sys.Console.ForegroundColor = sys.ConsoleColor.White;
-                sys.Console.WriteLine(GetRow(chars, i));
+                chars[points.First().Y - minHeight, (points.First().X - minWidth) * 2] = 'S';
+                chars[points.Last().Y - minHeight, (points.Last().X - minWidth) * 2] = 'F';
+            }
+
+            for (int i = 0; i < Height; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write((i + 1).ToString("d3") + " ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(GetRow(chars, i));
             }
         }
 
-        internal void Print<Point>(DNA<Point> genotype, int generation)
+        private void PrintHeader(int generation, int geneCount, double fitness)
         {
-            throw new NotImplementedException();
+            string ruler = "0 _ _ _ _ _ _ _ 9 1 _ _ _ _ _ _ _ _ 9 2 _ _ _ _ _ _ _ _ 9 3 _ _ _ _ _ _ _ _ 9 5 _ _ _ _ _ _ _ _ 9 40";
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"\r\n\r\n    Generation: {generation,4:####} Gene count: {geneCount,3:###}  fitness: {fitness,6:0.0000}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("    ");
+            Console.WriteLine(ruler.Substring(0, Math.Min(ruler.Length, Width * 2)));
+            Console.WriteLine();
         }
 
         private T[] GetRow<T>(T[,] matrix, int row)
