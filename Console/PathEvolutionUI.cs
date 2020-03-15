@@ -18,30 +18,26 @@ namespace ConsoleUI
 
             try
             {
-                bool quit = false;
-
-                if (quit)
-                    return;
-
                 Console.WriteLine("Population size:");
                 int populationSize = int.Parse(Console.ReadLine());
 
-                //Number of vectors:
-                int dnaSize = 40; 
+                evolution.StartingPoint = new Point(0, 0);
+                evolution.TargetPoint = new Point(50, 30);
+
+                //Number of vectors (=points). Based on DnaMinValue/DnaMaxValue = (-)2:
+                //int dnaSize = (int)((evolution.TargetPoint - evolution.StartingPoint).Value * 1.2f); 
+                // two obstacles:
+                int dnaSize = 150;
 
                 evolution.SetParameters(
                     new Parameters()
                     {
                         TargetFitness = targetFitness,
                         PopulationSize = populationSize,
-                        DnaMinValue = -9,
-                        DnaMaxValue = 9,
+                        DnaMinValue = -2, //-9,
+                        DnaMaxValue = 2,  // 9,
                         MutationRate = mutationRate
                     });
-
-                // This weird structure is a result of the fact that a specific end state is sought.
-                evolution.StartingPoint = new Point(25, 0);
-                evolution.TargetPoint = new Point(21, 34);
 
                 evolution.Run(dnaSize, DisplayPhenotype);
             }
@@ -51,6 +47,7 @@ namespace ConsoleUI
             }
             finally
             {
+                
                 Console.Read();
             }
         }
@@ -59,30 +56,15 @@ namespace ConsoleUI
         {
             // err.: genotype.Genes.Min(p => p.DistanceToTarget);
 
-            Console.WriteLine($"{generation,5:#####}  {genotype.Fitness,5:0.000}");
+            evolution.EvaluatePath(genotype, out int minDistanceToTarget, out int minTotalDistance, out int length);
 
-            if (genotype.Fitness <= targetFitness)
-            { 
-                int minDistanceToTarget;
-                int minTotalDistance;
-                int length;
+            Console.Write($"\r\n    Gap: {minDistanceToTarget,2:##} distance: {minTotalDistance,3:##0}");
 
-                evolution.EvaluatePath(genotype, out minDistanceToTarget, out minTotalDistance, out length);
+            Point[] points = new Point[length];
+            Array.Copy(genotype.Genes, points, length);
 
-                Console.WriteLine($"Gap: {minDistanceToTarget,2:#0} length: {length,2:#0} distance: {minTotalDistance,3:##0}");
+            new Matrix().PrintPath(points, generation, genotype.Fitness, evolution.StartingPoint);
 
-                Point[] path = new Point[length];
-                Array.Copy(genotype.Genes, path, length);
-
-                for (int i = 0; i < path.Length; i++)
-                {
-                    Console.WriteLine($"Step {i+1,3:##0}\t{genotype.Genes[i]}");
-                }
-
-                Matrix matrix = new Matrix(40, 40);
-                matrix.Print(path, generation);
-
-            }
         }
     }
 }

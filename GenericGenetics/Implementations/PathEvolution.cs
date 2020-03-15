@@ -11,11 +11,7 @@ namespace GenericGenetics.Implementations
 
         internal override double DetermineFitness(DNA<Point> genotype)
         {
-            int minDistanceToTarget;
-            int minTotalDistance;
-            int length;
-
-            EvaluatePath(genotype, out minDistanceToTarget, out minTotalDistance, out length);
+            EvaluatePath(genotype, out int minDistanceToTarget, out int minTotalDistance, out int length);
 
             double fitness = minDistanceToTarget + (minTotalDistance / 1000d);
 
@@ -25,6 +21,7 @@ namespace GenericGenetics.Implementations
         public void EvaluatePath(DNA<Point> genotype, out int minDistanceToTarget, out int minTotalDistance, out int length)
         {
             Point currentPoint = StartingPoint;
+            bool obstacle = false;
 
             minDistanceToTarget = (TargetPoint - (currentPoint + genotype.Genes[0])).Value + 1;
             minTotalDistance = 0;
@@ -40,9 +37,19 @@ namespace GenericGenetics.Implementations
                 {
                     minDistanceToTarget = (TargetPoint - currentPoint).Value;
                     minTotalDistance = totalDistance;
+
+                    //if (currentPoint.Y > 5 && currentPoint.Y < 8 && currentPoint.X < 40)
+                    //    obstacle = true;
+
+                    //if (currentPoint.X > 5 && currentPoint.X < 8 && currentPoint.Y < 30)
+                    //    obstacle = true;
+
                     length = i + 1;
-                }
+                }  
             }
+
+            if (obstacle)
+                minDistanceToTarget += 1000;
         }
 
         internal override Point GetRandomGene(Random random)
